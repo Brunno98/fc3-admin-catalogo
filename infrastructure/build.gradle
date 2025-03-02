@@ -1,0 +1,59 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.flywaydb:flyway-mysql:8.5.10'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.flywaydb.flyway' version '8.5.10'
+}
+
+bootJar {
+    archiveFileName.set('application.jar')
+    destinationDirectory.set(file("${rootProject.buildDir}/libs"))
+}
+
+group = 'br.com.brunno.admin.catalogo.infrastructure'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":domain"))
+    implementation(project(":application"))
+    implementation('mysql:mysql-connector-java')
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.6.8'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.8'
+    implementation 'io.vavr:vavr:0.10.6'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation('org.flywaydb:flyway-core')
+    testRuntimeOnly 'com.h2database:h2'
+    testImplementation 'org.testcontainers:testcontainers:1.17.2'
+    testImplementation 'org.testcontainers:mysql:1.17.2'
+    testImplementation 'org.testcontainers:junit-jupiter:1.17.2'
+}
+
+flyway {
+    url = System.getenv("FLAYWAY_DB") ?: 'jdbc:mysql://localhost:3306/adm_videos'
+    user = System.getenv("FLAYWAY_USER") ?: 'root'
+    password = System.getenv("FLAYWAY_PASS") ?: '123456'
+}
+
+test {
+    useJUnitPlatform()
+}

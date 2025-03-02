@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="da3ae988-ec0b-44a2-8920-d59a9b6bf472" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="fc3-admin-catalogo" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="fc3-admin-catalogo" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="fc3-admin-catalogo" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="AnnotationType" />
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2tibKHVWm87EIW8FIbd5Y209xwp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.CategoryMySQLGatewayTest.givenACategoriesList_whenCallsExistsByIds_shouldReturnTheExistentIds.executor": "Run",
+    "Gradle.CategoryTest.testNewCategory.executor": "Debug",
+    "Gradle.CreateGenreRequestTest.executor": "Run",
+    "Gradle.CreateGenreUseCaseIT.executor": "Run",
+    "Gradle.CreateGenreUseCaseIT.givenAnInvalidCommand_whenCallsCreateAGenreWithSomeCategoriesThatNotExists_shouldReturnNotificationError.executor": "Run",
+    "Gradle.DeleteGenreUseCaseIT.executor": "Run",
+    "Gradle.E2EGennreTest.asACatalogAdminIShouldBeAbleToListCategories.executor": "Run",
+    "Gradle.E2EGennreTest.executor": "Run",
+    "Gradle.GenreAPITest.executor": "Run",
+    "Gradle.GenreListResponseTest.executor": "Run",
+    "Gradle.GenreResponseTest.executor": "Run",
+    "Gradle.GetGenreByIdUseIT.executor": "Run",
+    "Gradle.GetGenreByIdUseIT.givenAValidId_whenCallsGetGenre_shouldReturnGenre.executor": "Run",
+    "Gradle.ListGenreUseCaseIT.executor": "Run",
+    "Gradle.ListGenreUseCaseTest.executor": "Run",
+    "Gradle.UpdateGenreRequestTest.executor": "Run",
+    "Gradle.UpdateGenreUseIT.executor": "Run",
+    "Gradle.fc3-admin-catalogo [test].executor": "Run",
+    "Gradle.fc3-admin-catalogo:infrastructure [:infrastructure:br.com.brunno.admin.catalogo.infrastructure.Main.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="br.com.brunno.admin.catalogo.infrastructure.genre.models" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.com.brunno.admin.catalogo.e2e.genre" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="br.com.brunno.admin.catalogo.infrastructure.Main" />
+      <module name="fc3-admin-catalogo.infrastructure.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.brunno.admin.catalogo.infrastructure.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="da3ae988-ec0b-44a2-8920-d59a9b6bf472" name="Changes" comment="" />
+      <created>1740837778615</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740837778615</updated>
+    </task>
+    <servers />
+  </component>
+</project>
