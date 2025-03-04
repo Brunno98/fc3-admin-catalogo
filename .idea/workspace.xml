@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da3ae988-ec0b-44a2-8920-d59a9b6bf472" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/br/com/brunno/admin/catalogo/domain/castmember/CastMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/br/com/brunno/admin/catalogo/domain/castmember/CastMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/br/com/brunno/admin/catalogo/domain/castmember/CastMemberID.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/br/com/brunno/admin/catalogo/domain/castmember/CastMemberID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/java/br/com/brunno/admin/catalogo/infrastructure/genre/persistence/GenreMySQLGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/src/main/java/br/com/brunno/admin/catalogo/infrastructure/genre/persistence/GenreMySQLGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/src/test/java/br/com/brunno/admin/catalogo/CleanupMySQLExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/src/test/java/br/com/brunno/admin/catalogo/CleanupMySQLExtension.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/br/com/brunno/admin/catalogo/domain/castmember/CastMemberType.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/br/com/brunno/admin/catalogo/domain/castmember/CastMemberType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/src/main/java/br/com/brunno/admin/catalogo/infrastructure/api/controllers/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/src/main/java/br/com/brunno/admin/catalogo/infrastructure/api/controllers/GlobalExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +46,12 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="application" type="c8890929:TasksNode$1" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="fc3-admin-catalogo" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -61,9 +63,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
-        <option value="Record" />
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Record" />
         <option value="Class" />
       </list>
     </option>
@@ -80,68 +82,71 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.CastMemberMySQLGatewayTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CastMemberMySQLGatewayTest.givenAValidPagination_whenCallsFindAll_shouldReturnPaginated.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CastMemberMySQLGatewayTest.givenAValidSortAndDirection_whenCallsFindAll_shouldReturnSorted.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CastMemberMySQLGatewayTest.givenEmptyCastMembers_whenCallsFindAll_shouldReturnEmpty.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CastMemberTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CastMemberTest.givenAValidParams_whenUpdateACastMember_shouldUpdateTheCastMember.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryMySQLGatewayTest.givenACategoriesList_whenCallsExistsByIds_shouldReturnTheExistentIds.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CategoryTest.testNewCategory.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.CreateCastMemberUseCaseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CreateCastMemberUseCaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CreateCastMemberUseCaseTest.givenAValidCommand_whenCallsCreateCastMember_shouldReturnIt.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CreateGenreRequestTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CreateGenreUseCaseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CreateGenreUseCaseIT.givenAnInvalidCommand_whenCallsCreateAGenreWithSomeCategoriesThatNotExists_shouldReturnNotificationError.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DeleteCastMemberUseCaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DeleteCastMemberUseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DeleteCastMemberUseIT.givenANonExistentCastMemberId_whenCallsDelete_shouldDoNothing.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.DeleteGenreUseCaseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.E2EGennreTest.asACatalogAdminIShouldBeAbleToListCategories.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.E2EGennreTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GenreAPITest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GenreListResponseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GenreResponseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GetCastMemberUseCaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GetCastMemberUseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GetGenreByIdUseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GetGenreByIdUseIT.givenAValidId_whenCallsGetGenre_shouldReturnGenre.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ListCastMemberUseCaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ListCastMemberUseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ListGenreUseCaseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ListGenreUseCaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UpdateCastMemberUseCaseTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UpdateCastMemberUseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UpdateGenreRequestTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UpdateGenreUseIT.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.fc3-admin-catalogo [bootRun].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.fc3-admin-catalogo [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.fc3-admin-catalogo:application [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.fc3-admin-catalogo:infrastructure [:infrastructure:br.com.brunno.admin.catalogo.infrastructure.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;//wsl$/Ubuntu/home/brunno/fullcycle/codeflix/fc3-admin-catalogo/infrastructure/src/main/resources/db/migration&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.44827586&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.CastMemberAPITest.executor": "Run",
+    "Gradle.CastMemberAPITest.givenAValidParams_whenCallListCastMembers_shouldReturnIt.executor": "Run",
+    "Gradle.CastMemberAPITest.givenAnInvalidCastMemberType_whenCreateACastMember_shouldReturnsUnprocessableEntity.executor": "Run",
+    "Gradle.CastMemberMySQLGatewayTest.executor": "Run",
+    "Gradle.CastMemberMySQLGatewayTest.givenAValidPagination_whenCallsFindAll_shouldReturnPaginated.executor": "Run",
+    "Gradle.CastMemberMySQLGatewayTest.givenAValidSortAndDirection_whenCallsFindAll_shouldReturnSorted.executor": "Run",
+    "Gradle.CastMemberMySQLGatewayTest.givenEmptyCastMembers_whenCallsFindAll_shouldReturnEmpty.executor": "Run",
+    "Gradle.CastMemberTest.executor": "Run",
+    "Gradle.CastMemberTest.givenAValidParams_whenUpdateACastMember_shouldUpdateTheCastMember.executor": "Run",
+    "Gradle.CategoryMySQLGatewayTest.givenACategoriesList_whenCallsExistsByIds_shouldReturnTheExistentIds.executor": "Run",
+    "Gradle.CategoryTest.testNewCategory.executor": "Debug",
+    "Gradle.CreateCastMemberUseCaseIT.executor": "Run",
+    "Gradle.CreateCastMemberUseCaseTest.executor": "Run",
+    "Gradle.CreateCastMemberUseCaseTest.givenAValidCommand_whenCallsCreateCastMember_shouldReturnIt.executor": "Run",
+    "Gradle.CreateGenreRequestTest.executor": "Run",
+    "Gradle.CreateGenreUseCaseIT.executor": "Run",
+    "Gradle.CreateGenreUseCaseIT.givenAnInvalidCommand_whenCallsCreateAGenreWithSomeCategoriesThatNotExists_shouldReturnNotificationError.executor": "Run",
+    "Gradle.DeleteCastMemberUseCaseTest.executor": "Run",
+    "Gradle.DeleteCastMemberUseIT.executor": "Run",
+    "Gradle.DeleteCastMemberUseIT.givenANonExistentCastMemberId_whenCallsDelete_shouldDoNothing.executor": "Run",
+    "Gradle.DeleteGenreUseCaseIT.executor": "Run",
+    "Gradle.E2EGennreTest.asACatalogAdminIShouldBeAbleToListCategories.executor": "Run",
+    "Gradle.E2EGennreTest.executor": "Run",
+    "Gradle.GenreAPITest.executor": "Run",
+    "Gradle.GenreListResponseTest.executor": "Run",
+    "Gradle.GenreResponseTest.executor": "Run",
+    "Gradle.GetCastMemberUseCaseTest.executor": "Run",
+    "Gradle.GetCastMemberUseIT.executor": "Run",
+    "Gradle.GetGenreByIdUseIT.executor": "Run",
+    "Gradle.GetGenreByIdUseIT.givenAValidId_whenCallsGetGenre_shouldReturnGenre.executor": "Run",
+    "Gradle.ListCastMemberUseCaseTest.executor": "Run",
+    "Gradle.ListCastMemberUseIT.executor": "Run",
+    "Gradle.ListGenreUseCaseIT.executor": "Run",
+    "Gradle.ListGenreUseCaseTest.executor": "Run",
+    "Gradle.UpdateCastMemberUseCaseTest.executor": "Run",
+    "Gradle.UpdateCastMemberUseIT.executor": "Run",
+    "Gradle.UpdateGenreRequestTest.executor": "Run",
+    "Gradle.UpdateGenreUseIT.executor": "Run",
+    "Gradle.fc3-admin-catalogo [bootRun].executor": "Run",
+    "Gradle.fc3-admin-catalogo [test].executor": "Run",
+    "Gradle.fc3-admin-catalogo:application [test].executor": "Run",
+    "Gradle.fc3-admin-catalogo:infrastructure [:infrastructure:br.com.brunno.admin.catalogo.infrastructure.Main.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "//wsl$/Ubuntu/home/brunno/fullcycle/codeflix/fc3-admin-catalogo/infrastructure/src/main/resources/db/migration",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.44827586",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="br.com.brunno.admin.catalogo.infrastructure.castmember.models" />
       <recent name="br.com.brunno.admin.catalogo.application.castmember.retrieve.list" />
       <recent name="br.com.brunno.admin.catalogo.application.castmember.retrieve.get" />
       <recent name="br.com.brunno.admin.catalogo.application.castmember.update" />
       <recent name="br.com.brunno.admin.catalogo.application.castmember.create" />
-      <recent name="br.com.brunno.admin.catalogo.domain.castmember" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="\\wsl$\Ubuntu\home\brunno\fullcycle\codeflix\fc3-admin-catalogo\infrastructure\src\main\resources\db\migration" />
@@ -163,8 +168,8 @@
       <recent name="br.com.brunno.admin.catalogo.application.castmember.create" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.fc3-admin-catalogo [test]">
-    <configuration name="DeleteCastMemberUseIT.givenANonExistentCastMemberId_whenCallsDelete_shouldDoNothing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.CastMemberAPITest.givenAValidParams_whenCallListCastMembers_shouldReturnIt">
+    <configuration name="CastMemberAPITest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -177,7 +182,7 @@
           <list>
             <option value=":infrastructure:test" />
             <option value="--tests" />
-            <option value="&quot;br.com.brunno.admin.catalogo.application.castmember.delete.DeleteCastMemberUseIT.givenANonExistentCastMemberId_whenCallsDelete_shouldDoNothing&quot;" />
+            <option value="&quot;br.com.brunno.admin.catalogo.infrastructure.api.CastMemberAPITest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -188,7 +193,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="GetCastMemberUseIT" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CastMemberAPITest.givenAValidParams_whenCallListCastMembers_shouldReturnIt" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -201,7 +206,7 @@
           <list>
             <option value=":infrastructure:test" />
             <option value="--tests" />
-            <option value="&quot;br.com.brunno.admin.catalogo.application.castmember.retrieve.get.GetCastMemberUseIT&quot;" />
+            <option value="&quot;br.com.brunno.admin.catalogo.infrastructure.api.CastMemberAPITest.givenAValidParams_whenCallListCastMembers_shouldReturnIt&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -212,7 +217,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="ListCastMemberUseIT" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CastMemberAPITest.givenAnInvalidCastMemberType_whenCreateACastMember_shouldReturnsUnprocessableEntity" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -225,7 +230,7 @@
           <list>
             <option value=":infrastructure:test" />
             <option value="--tests" />
-            <option value="&quot;br.com.brunno.admin.catalogo.application.castmember.retrieve.list.ListCastMemberUseIT&quot;" />
+            <option value="&quot;br.com.brunno.admin.catalogo.infrastructure.api.CastMemberAPITest.givenAnInvalidCastMemberType_whenCreateACastMember_shouldReturnsUnprocessableEntity&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -236,28 +241,26 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="UpdateCastMemberUseIT" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="fc3-admin-catalogo [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":infrastructure:test" />
-            <option value="--tests" />
-            <option value="&quot;br.com.brunno.admin.catalogo.application.castmember.update.UpdateCastMemberUseIT&quot;" />
+            <option value="bootRun" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="fc3-admin-catalogo [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -283,19 +286,19 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Gradle.CastMemberAPITest" />
+      <item itemvalue="Gradle.CastMemberAPITest.givenAValidParams_whenCallListCastMembers_shouldReturnIt" />
+      <item itemvalue="Gradle.CastMemberAPITest.givenAnInvalidCastMemberType_whenCreateACastMember_shouldReturnsUnprocessableEntity" />
+      <item itemvalue="Gradle.fc3-admin-catalogo [bootRun]" />
       <item itemvalue="Gradle.fc3-admin-catalogo [test]" />
-      <item itemvalue="Gradle.DeleteCastMemberUseIT.givenANonExistentCastMemberId_whenCallsDelete_shouldDoNothing" />
-      <item itemvalue="Gradle.GetCastMemberUseIT" />
-      <item itemvalue="Gradle.ListCastMemberUseIT" />
-      <item itemvalue="Gradle.UpdateCastMemberUseIT" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CastMemberAPITest.givenAValidParams_whenCallListCastMembers_shouldReturnIt" />
+        <item itemvalue="Gradle.CastMemberAPITest" />
+        <item itemvalue="Gradle.fc3-admin-catalogo [bootRun]" />
+        <item itemvalue="Gradle.CastMemberAPITest.givenAnInvalidCastMemberType_whenCreateACastMember_shouldReturnsUnprocessableEntity" />
         <item itemvalue="Gradle.fc3-admin-catalogo [test]" />
-        <item itemvalue="Gradle.ListCastMemberUseIT" />
-        <item itemvalue="Gradle.GetCastMemberUseIT" />
-        <item itemvalue="Gradle.UpdateCastMemberUseIT" />
-        <item itemvalue="Gradle.DeleteCastMemberUseIT.givenANonExistentCastMemberId_whenCallsDelete_shouldDoNothing" />
       </list>
     </recent_temporary>
   </component>

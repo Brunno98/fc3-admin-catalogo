@@ -28,4 +28,5 @@ public class GlobalExceptionHandler {
             return new ApiError(ex.getMessage(), ex.getErrors());
         }
     }
+
 }
