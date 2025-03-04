@@ -6,7 +6,6 @@ import br.com.brunno.admin.catalogo.domain.genre.GenreID;
 import br.com.brunno.admin.catalogo.domain.pagination.Pagination;
 import br.com.brunno.admin.catalogo.domain.pagination.SearchQuery;
 import br.com.brunno.admin.catalogo.infrastructure.util.SpecificationUtil;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;

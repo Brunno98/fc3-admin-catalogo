@@ -50,6 +50,16 @@ public class CastMember extends AggregateRoot<CastMemberID> {
         return new CastMember(id, name, type, now, now);
     }
 
+    public static CastMember create(
+            CastMemberID id,
+            String name,
+            CastMemberType type,
+            Instant createdAt,
+            Instant updatedAt
+    ) {
+        return new CastMember(id, name, type, createdAt, updatedAt);
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new CastMemberValidator(this, handler).validate();
@@ -64,11 +74,11 @@ public class CastMember extends AggregateRoot<CastMemberID> {
     }
 
     public Instant getCreatedAt() {
-        return createdAt;
+        return createdAt.truncatedTo(ChronoUnit.MICROS);
     }
 
     public Instant getUpdatedAt() {
-        return updatedAt;
+        return updatedAt.truncatedTo(ChronoUnit.MICROS);
     }
 
     public CastMemberID getId() {
