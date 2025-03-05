@@ -28,7 +28,7 @@ public class VideoTest {
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedCastMembers = Set.of(CastMemberID.unique());
 
-        final var actualVideo = Video.create(
+        final var actualVideo = Video.newVideo(
                 expectedTitle,
                 expectedDescription,
                 expectedLaunchedAt,

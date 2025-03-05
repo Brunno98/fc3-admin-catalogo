@@ -11,6 +11,7 @@ import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Video extends AggregateRoot<VideoID> {
@@ -40,13 +41,18 @@ public class Video extends AggregateRoot<VideoID> {
             VideoID id,
             String title,
             String description,
-            Year launchedAt,
+            Year launchedYear,
             double duration,
             boolean opened,
             boolean published,
             Rating rating,
             Instant createdAt,
             Instant updatedAt,
+            ImageMedia banner,
+            ImageMedia thumbnail,
+            ImageMedia thumbnailHalf,
+            AudioVideoMedia trailer,
+            AudioVideoMedia video,
             Set<CategoryId> categories,
             Set<GenreID> genres,
             Set<CastMemberID> castMembers
@@ -55,7 +61,7 @@ public class Video extends AggregateRoot<VideoID> {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.launchedAt = launchedAt;
+        this.launchedAt = launchedYear;
         this.duration = duration;
         this.opened = opened;
         this.published = published;
@@ -65,12 +71,17 @@ public class Video extends AggregateRoot<VideoID> {
         this.categories = categories;
         this.genres = genres;
         this.castMembers = castMembers;
+        this.banner = banner;
+        this.thumbnail = thumbnail;
+        this.thumbnailHalf = thumbnailHalf;
+        this.trailer = trailer;
+        this.video = video;
     }
 
-    public static Video create(
+    public static Video newVideo(
             String title,
             String description,
-            Year launchedAt,
+            Year launchedYear,
             double duration,
             boolean opened,
             boolean published,
@@ -84,16 +95,44 @@ public class Video extends AggregateRoot<VideoID> {
                 VideoID.unique(),
                 title,
                 description,
-                launchedAt,
+                launchedYear,
                 duration,
                 opened,
                 published,
                 rating,
                 now,
                 now,
+                null,
+                null,
+                null,
+                null,
+                null,
                 categories,
                 genres,
                 castMembers
+        );
+    }
+
+    public static Video with(Video video) {
+        return new Video(
+                video.getId(),
+                video.getTitle(),
+                video.getDescription(),
+                video.getLaunchedAt(),
+                video.getDuration(),
+                video.isOpened(),
+                video.isPublished(),
+                video.getRating(),
+                video.getCreatedAt(),
+                video.getUpdatedAt(),
+                video.getBanner().orElse(null),
+                video.getThumbnail().orElse(null),
+                video.getThumbnailHalf().orElse(null),
+                video.getTrailer().orElse(null),
+                video.getVideo().orElse(null),
+                new HashSet<>(video.getCategories()),
+                new HashSet<>(video.getGenres()),
+                new HashSet<>(video.getCastMembers())
         );
     }
 
@@ -157,4 +196,91 @@ public class Video extends AggregateRoot<VideoID> {
         return new HashSet<>(this.castMembers);
     }
 
+    public Optional<ImageMedia> getBanner() {
+        return Optional.ofNullable(banner);
+    }
+
+    public Optional<ImageMedia> getThumbnail() {
+        return Optional.ofNullable(thumbnail);
+    }
+
+    public Optional<ImageMedia> getThumbnailHalf() {
+        return Optional.ofNullable(thumbnailHalf);
+    }
+
+    public Optional<AudioVideoMedia> getTrailer() {
+        return Optional.ofNullable(trailer);
+    }
+
+    public Optional<AudioVideoMedia> getVideo() {
+        return Optional.ofNullable(video);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLaunchedAt(Year launchedAt) {
+        this.launchedAt = launchedAt;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setBanner(ImageMedia banner) {
+        this.banner = banner;
+    }
+
+    public void setThumbnail(ImageMedia thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public void setThumbnailHalf(ImageMedia thumbnailHalf) {
+        this.thumbnailHalf = thumbnailHalf;
+    }
+
+    public void setTrailer(AudioVideoMedia trailer) {
+        this.trailer = trailer;
+    }
+
+    public void setVideo(AudioVideoMedia video) {
+        this.video = video;
+    }
+
+    public void setCategories(Set<CategoryId> categories) {
+        this.categories = categories;
+    }
+
+    public void setGenres(Set<GenreID> genres) {
+        this.genres = genres;
+    }
+
+    public void setCastMembers(Set<CastMemberID> castMembers) {
+        this.castMembers = castMembers;
+    }
 }
