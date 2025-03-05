@@ -216,71 +216,65 @@ public class Video extends AggregateRoot<VideoID> {
         return Optional.ofNullable(video);
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setLaunchedAt(Year launchedAt) {
-        this.launchedAt = launchedAt;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    public void setOpened(boolean opened) {
-        this.opened = opened;
-    }
-
-    public void setPublished(boolean published) {
-        this.published = published;
-    }
-
-    public void setRating(Rating rating) {
-        this.rating = rating;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public void setBanner(ImageMedia banner) {
         this.banner = banner;
+        this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
     public void setThumbnail(ImageMedia thumbnail) {
         this.thumbnail = thumbnail;
+        this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
     public void setThumbnailHalf(ImageMedia thumbnailHalf) {
         this.thumbnailHalf = thumbnailHalf;
+        this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
     public void setTrailer(AudioVideoMedia trailer) {
         this.trailer = trailer;
+        this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
     public void setVideo(AudioVideoMedia video) {
         this.video = video;
+        this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
-    public void setCategories(Set<CategoryId> categories) {
+    private void setCategories(Set<CategoryId> categories) {
         this.categories = categories;
     }
 
-    public void setGenres(Set<GenreID> genres) {
+    private void setGenres(Set<GenreID> genres) {
         this.genres = genres;
     }
 
-    public void setCastMembers(Set<CastMemberID> castMembers) {
+    private void setCastMembers(Set<CastMemberID> castMembers) {
         this.castMembers = castMembers;
+    }
+
+    public void update(
+            String title,
+            String description,
+            Year launchedAt,
+            double duration,
+            boolean opened,
+            boolean published,
+            Rating rating,
+            Set<CategoryId> categories,
+            Set<GenreID> genres,
+            Set<CastMemberID> castMembers
+    ) {
+        this.title = title;
+        this.description = description;
+        this.launchedAt = launchedAt;
+        this.duration = duration;
+        this.opened = opened;
+        this.published = published;
+        this.rating = rating;
+        this.setCategories(categories);
+        this.setGenres(genres);
+        this.setCastMembers(castMembers);
+        this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 }
