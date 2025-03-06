@@ -20,7 +20,7 @@ public class AudioVideoMedia extends ValueObject {
         this.status = Objects.requireNonNull(status);
     }
 
-    public static AudioVideoMedia create(String checksum, String name, String rawLocation, String encodedLocation, MediaStatus status) {
+    public static AudioVideoMedia with(String checksum, String name, String rawLocation, String encodedLocation, MediaStatus status) {
         return new AudioVideoMedia(checksum, name, rawLocation, encodedLocation, status);
     }
 
@@ -48,5 +48,17 @@ public class AudioVideoMedia extends ValueObject {
     public String getValue() {
         //TODO: Reavaliar metodo 'getValue' do valueObject. Talvez nem todos precisem desse metodo.
         return this.checksum;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        AudioVideoMedia that = (AudioVideoMedia) o;
+        return Objects.equals(checksum, that.checksum) && Objects.equals(rawLocation, that.rawLocation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(checksum, rawLocation);
     }
 }

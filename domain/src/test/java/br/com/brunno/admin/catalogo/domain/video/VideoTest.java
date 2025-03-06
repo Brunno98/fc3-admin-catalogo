@@ -7,7 +7,6 @@ import br.com.brunno.admin.catalogo.domain.validation.handler.ThrowsValidationHa
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.time.Year;
 import java.util.Set;
 
@@ -145,7 +144,7 @@ public class VideoTest {
         final var actualVideo = Video.with(initialVideo);
 
         final var aVideoMedia = AudioVideoMedia
-                .create("abc", "Video.mp4", "/123/video.mp4", "", MediaStatus.PENDING);
+                .with("abc", "Video.mp4", "/123/video.mp4", "", MediaStatus.PENDING);
         actualVideo.setVideo(aVideoMedia);
 
         assertEquals(aVideoMedia, actualVideo.getVideo().get());
@@ -181,7 +180,7 @@ public class VideoTest {
         final var actualVideo = Video.with(initialVideo);
 
         final var aTrailerMedia = AudioVideoMedia
-                .create("abc", "Trailer.mp4", "/123/trailer.mp4", "", MediaStatus.PENDING);
+                .with("abc", "Trailer.mp4", "/123/trailer.mp4", "", MediaStatus.PENDING);
         actualVideo.setTrailer(aTrailerMedia);
 
         assertEquals(aTrailerMedia, actualVideo.getTrailer().get());
