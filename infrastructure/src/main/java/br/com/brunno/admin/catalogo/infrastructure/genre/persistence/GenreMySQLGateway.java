@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -69,6 +70,11 @@ public class GenreMySQLGateway implements GenreGateway {
                 pageResult.getTotalElements(),
                 pageResult.map(GenreJpaEntity::toAggregate).toList()
         );
+    }
+
+    @Override
+    public List<GenreID> existisByIds(List<GenreID> ids) {
+        throw new UnsupportedOperationException("Method not implemented");
     }
 
 }

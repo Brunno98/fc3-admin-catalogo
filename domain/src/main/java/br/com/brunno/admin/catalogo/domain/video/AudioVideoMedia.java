@@ -45,12 +45,6 @@ public class AudioVideoMedia extends ValueObject {
     }
 
     @Override
-    public String getValue() {
-        //TODO: Reavaliar metodo 'getValue' do valueObject. Talvez nem todos precisem desse metodo.
-        return this.checksum;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         AudioVideoMedia that = (AudioVideoMedia) o;

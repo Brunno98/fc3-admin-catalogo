@@ -3,6 +3,7 @@ package br.com.brunno.admin.catalogo.domain.castmember;
 import br.com.brunno.admin.catalogo.domain.pagination.Pagination;
 import br.com.brunno.admin.catalogo.domain.pagination.SearchQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CastMemberGateway {
@@ -17,4 +18,5 @@ public interface CastMemberGateway {
 
     Pagination<CastMember> findAll(SearchQuery aQuery);
 
+    List<CastMemberID> existisByIds(List<CastMemberID> ids);
 }

@@ -5,7 +5,6 @@ import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotFoundException;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +28,7 @@ class GetCastMemberUseCaseTest {
     @Test
     void givenAValidId_whenCallsGetById_shouldReturnTheCastMember() {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var castMember = CastMember.create(expectedName, expectedType);
         final var expectedId = castMember.getId();
 

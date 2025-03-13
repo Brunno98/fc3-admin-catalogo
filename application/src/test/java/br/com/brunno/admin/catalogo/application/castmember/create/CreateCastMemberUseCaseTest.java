@@ -4,10 +4,8 @@ import br.com.brunno.admin.catalogo.application.Fixture;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotificationException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -34,7 +32,7 @@ public class CreateCastMemberUseCaseTest {
     @Test
     void givenAValidCommand_whenCallsCreateCastMember_shouldReturnIt() {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var aCommand = CreateCastMemberCommand.with(expectedName, expectedType);
 
         Mockito.when(castMemberGateway.create(any()))
@@ -56,7 +54,7 @@ public class CreateCastMemberUseCaseTest {
     @Test
     void givenAnInvalidName_whenCallsCreateCastMember_shouldThrowsNotificationException() {
         final String inputName = null;
-        final var inputCastMemberType = Fixture.CastMember.type();
+        final var inputCastMemberType = Fixture.CastMembers.type();
         final var aCommand = CreateCastMemberCommand.with(inputName, inputCastMemberType);
 
         final var actualException = assertThrows(NotificationException.class,

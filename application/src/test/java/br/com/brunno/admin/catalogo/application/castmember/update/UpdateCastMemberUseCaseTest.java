@@ -19,7 +19,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 
@@ -63,7 +62,7 @@ public class UpdateCastMemberUseCaseTest {
         final var aCastMember = CastMember.create("Vin Diesel", CastMemberType.DIRECTOR);
         final var castMemberId = aCastMember.getId();
         final String inputName = null;
-        final var inputType = Fixture.CastMember.type();
+        final var inputType = Fixture.CastMembers.type();
         final var aCommand = UpdateCastMemberCommand.with(castMemberId, inputName, inputType);
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'name' should not be null";
@@ -103,7 +102,7 @@ public class UpdateCastMemberUseCaseTest {
         final var aCastMember = CastMember.create("Vin Diesel", CastMemberType.DIRECTOR);
         final var castMemberId = aCastMember.getId();
         final String inputName = Fixture.name();
-        final var inputType = Fixture.CastMember.type();
+        final var inputType = Fixture.CastMembers.type();
         final var aCommand = UpdateCastMemberCommand.with(castMemberId, inputName, inputType);
         final var expectedErrorMessage = "CastMember with ID '%s' not found".formatted(castMemberId.getValue());
 

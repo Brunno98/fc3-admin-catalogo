@@ -43,9 +43,4 @@ public class ImageMedia extends ValueObject {
     public int hashCode() {
         return Objects.hash(checksum, location);
     }
-
-    @Override
-    public Object getValue() {
-        return null;
-    }
 }

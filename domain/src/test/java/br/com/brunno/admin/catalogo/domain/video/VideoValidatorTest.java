@@ -43,10 +43,9 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
 
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -83,7 +82,7 @@ public class VideoValidatorTest {
         final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
 
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -117,10 +116,8 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -154,10 +151,8 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -191,10 +186,8 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -228,10 +221,8 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -265,10 +256,8 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -302,10 +291,8 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
@@ -339,10 +326,8 @@ public class VideoValidatorTest {
                 inputCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         final var actualException = Assertions.assertThrows(DomainException.class,
-                () -> validator.validate());
+                () -> actualVideo.validate(new ThrowsValidationHandler()));
 
         assertEquals(expectedErrorCount, actualException.getErrors().size());
         assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());

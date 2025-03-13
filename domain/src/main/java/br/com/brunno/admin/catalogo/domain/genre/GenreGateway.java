@@ -3,6 +3,7 @@ package br.com.brunno.admin.catalogo.domain.genre;
 import br.com.brunno.admin.catalogo.domain.pagination.Pagination;
 import br.com.brunno.admin.catalogo.domain.pagination.SearchQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GenreGateway {
@@ -17,4 +18,5 @@ public interface GenreGateway {
 
     Pagination<Genre> findAll(SearchQuery aQuery);
 
+    List<GenreID> existisByIds(List<GenreID> ids);
 }
