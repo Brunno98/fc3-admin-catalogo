@@ -113,6 +113,48 @@ public class Video extends AggregateRoot<VideoID> {
         );
     }
 
+    public static Video with(
+            VideoID id,
+            String title,
+            String description,
+            Year launchedYear,
+            double duration,
+            boolean opened,
+            boolean published,
+            Rating rating,
+            Instant createdAt,
+            Instant updatedAt,
+            ImageMedia banner,
+            ImageMedia thumbnail,
+            ImageMedia thumbnailHalf,
+            AudioVideoMedia video,
+            AudioVideoMedia trailer,
+            Set<CategoryId> categories,
+            Set<GenreID> genres,
+            Set<CastMemberID> castMembers
+    ) {
+        return new Video(
+                id,
+                title,
+                description,
+                launchedYear,
+                duration,
+                opened,
+                published,
+                rating,
+                createdAt,
+                updatedAt,
+                banner,
+                thumbnail,
+                thumbnailHalf,
+                trailer,
+                video,
+                categories,
+                genres,
+                castMembers
+        );
+    }
+
     public static Video with(Video video) {
         return new Video(
                 video.getId(),
@@ -174,11 +216,13 @@ public class Video extends AggregateRoot<VideoID> {
     }
 
     public Instant getCreatedAt() {
-        return createdAt;
+        if (Objects.isNull(createdAt)) return null;
+        return createdAt.truncatedTo(ChronoUnit.MICROS);
     }
 
     public Instant getUpdatedAt() {
-        return updatedAt;
+        if (Objects.isNull(updatedAt)) return null;
+        return updatedAt.truncatedTo(ChronoUnit.MICROS);
     }
 
     public Set<CategoryId> getCategories() {

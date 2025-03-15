@@ -14,7 +14,11 @@ public class CastMemberID extends Identifier {
     }
 
     public static CastMemberID unique() {
-        return CastMemberID.from(UUID.randomUUID().toString());
+        return CastMemberID.from(UUID.randomUUID());
+    }
+
+    public static CastMemberID from(UUID anId) {
+        return CastMemberID.from(anId.toString());
     }
 
     public static CastMemberID from(String anId) {
