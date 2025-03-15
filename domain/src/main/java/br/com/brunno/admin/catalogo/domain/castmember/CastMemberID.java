@@ -1,9 +1,9 @@
 package br.com.brunno.admin.catalogo.domain.castmember;
 
+import br.com.brunno.admin.catalogo.domain.DomainId;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class CastMemberID extends Identifier {
 
@@ -14,11 +14,11 @@ public class CastMemberID extends Identifier {
     }
 
     public static CastMemberID unique() {
-        return CastMemberID.from(UUID.randomUUID());
+        return CastMemberID.from(DomainId.generate());
     }
 
-    public static CastMemberID from(UUID anId) {
-        return CastMemberID.from(anId.toString());
+    public static CastMemberID from(DomainId anId) {
+        return CastMemberID.from(anId.getValue());
     }
 
     public static CastMemberID from(String anId) {

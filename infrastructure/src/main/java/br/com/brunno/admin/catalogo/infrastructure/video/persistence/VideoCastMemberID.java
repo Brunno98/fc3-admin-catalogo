@@ -13,38 +13,35 @@ import java.util.UUID;
 public class VideoCastMemberID implements Serializable {
 
     @Column(name = "video_id", nullable = false)
-    private UUID videoId;
+    private String videoId;
 
     @Column(name = "cast_member_id", nullable = false)
-    private UUID castMemberId;
+    private String castMemberId;
 
     public VideoCastMemberID() {}
 
-    private VideoCastMemberID(UUID videoId, UUID castMemberId) {
+    private VideoCastMemberID(String videoId, String castMemberId) {
         this.videoId = videoId;
         this.castMemberId = castMemberId;
     }
 
     public static VideoCastMemberID from(VideoID videoID, CastMemberID castMemberID) {
-        return new VideoCastMemberID(
-                UUID.fromString(videoID.getValue()),
-                UUID.fromString(castMemberID.getValue())
-        );
+        return new VideoCastMemberID(videoID.getValue(), castMemberID.getValue());
     }
 
-    public UUID getVideoId() {
+    public String getVideoId() {
         return videoId;
     }
 
-    public void setVideoId(UUID videoId) {
+    public void setVideoId(String videoId) {
         this.videoId = videoId;
     }
 
-    public UUID getCastMemberId() {
+    public String getCastMemberId() {
         return castMemberId;
     }
 
-    public void setCastMemberId(UUID castMemberId) {
+    public void setCastMemberId(String castMemberId) {
         this.castMemberId = castMemberId;
     }
 

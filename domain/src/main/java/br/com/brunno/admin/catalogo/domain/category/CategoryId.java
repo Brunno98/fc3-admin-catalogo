@@ -1,9 +1,9 @@
 package br.com.brunno.admin.catalogo.domain.category;
 
+import br.com.brunno.admin.catalogo.domain.DomainId;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class CategoryId extends Identifier {
 
@@ -15,16 +15,15 @@ public class CategoryId extends Identifier {
     }
 
     public static CategoryId unique() {
-        return new CategoryId(UUID.randomUUID().toString());
+        return CategoryId.from(DomainId.generate());
+    }
+
+    public static CategoryId from(DomainId anId) {
+        return CategoryId.from(anId.getValue());
     }
 
     public static CategoryId from(String anId) {
         return new CategoryId(anId);
-    }
-
-    public static CategoryId from(UUID anId) {
-        Objects.requireNonNull(anId, "'anId' should not be null!");
-        return new CategoryId(anId.toString().toLowerCase());
     }
 
     @Override

@@ -1,9 +1,9 @@
 package br.com.brunno.admin.catalogo.domain.genre;
 
+import br.com.brunno.admin.catalogo.domain.DomainId;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class GenreID extends Identifier {
 
@@ -31,11 +31,11 @@ public class GenreID extends Identifier {
     }
 
     public static GenreID unique() {
-        return from(UUID.randomUUID());
+        return from(DomainId.generate());
     }
 
-    public static GenreID from(UUID anId) {
-        return from(anId.toString());
+    public static GenreID from(DomainId anId) {
+        return from(anId.getValue());
     }
 
     public static GenreID from(String anId) {
