@@ -6,8 +6,8 @@ import br.com.brunno.admin.catalogo.domain.video.VideoID;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -18,7 +18,7 @@ public class VideoCastMemberJpaEntity {
     @EmbeddedId
     private VideoCastMemberID id;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("videoId")
     private VideoJpaEntity video;
 
