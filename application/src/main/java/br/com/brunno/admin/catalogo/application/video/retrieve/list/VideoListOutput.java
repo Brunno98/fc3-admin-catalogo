@@ -3,6 +3,7 @@ package br.com.brunno.admin.catalogo.application.video.retrieve.list;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.category.Category;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
+import br.com.brunno.admin.catalogo.domain.video.Video;
 import br.com.brunno.admin.catalogo.domain.video.VideoConsolidated;
 import br.com.brunno.admin.catalogo.domain.video.VideoID;
 
@@ -20,15 +21,18 @@ public record VideoListOutput(
         List<String> castMembers
 ) {
 
-//    public static VideoListOutput from(Video videos) {
-//        return new VideoListOutput(
-//                videos.getId(),
-//                videos.getTitle(),
-//                videos.getDescription(),
-//                videos.getCreatedAt(),
-//                videos.getUpdatedAt()
-//        );
-//    }
+    public static VideoListOutput from(Video videos) {
+        return new VideoListOutput(
+                videos.getId(),
+                videos.getTitle(),
+                videos.getDescription(),
+                videos.getCreatedAt(),
+                videos.getUpdatedAt(),
+                null,
+                null,
+                null
+        );
+    }
 
     // metodo criado para tentar resolver o desafio de retornar, no response da listagem de videos, os nomes dos generos, categorias e castMembers
     public static VideoListOutput from(VideoConsolidated videoConsolidated) {
