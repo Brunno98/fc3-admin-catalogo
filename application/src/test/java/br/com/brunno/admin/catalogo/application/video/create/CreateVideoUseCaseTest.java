@@ -64,8 +64,8 @@ public class CreateVideoUseCaseTest {
 
     @Test
     void givenAValidCommand_whenCallsCreateAVideo_shouldReturnVideoId() {
-        final var expectedTitle = "";
-        final var expectedDescription = "";
+        final var expectedTitle = "a title";
+        final var expectedDescription = "a description";
         final var expectedLaunchYear = Year.of(2022);
         final var expectedDuration = 120.1;
         final var expectedOpened = true;
@@ -157,8 +157,8 @@ public class CreateVideoUseCaseTest {
 
     @Test
     void givenAValidCommand_whenCallsCreateAVideoThrowsException_shouldClearResource() {
-        final var expectedTitle = "";
-        final var expectedDescription = "";
+        final var expectedTitle = "a title";
+        final var expectedDescription = "a description";
         final var expectedLaunchYear = Year.of(2022);
         final var expectedDuration = 120.1;
         final var expectedOpened = true;
