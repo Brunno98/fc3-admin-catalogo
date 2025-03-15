@@ -113,6 +113,8 @@ public class CreateVideoUseCase extends UseCase<CreateVideoCommand, CreateVideoO
             aVideo.setBanner(aBanner);
             aVideo.setThumbnail(aThumbnail);
             aVideo.setThumbnailHalf(aThumbnailHalf);
+
+            return videoGateway.create(aVideo);
         } catch (Throwable t) {
             this.mediaResourceGateway.clearResources(anId);
             throw InternalErroException.with(
@@ -120,8 +122,6 @@ public class CreateVideoUseCase extends UseCase<CreateVideoCommand, CreateVideoO
                     t
             );
         }
-
-        return videoGateway.create(aVideo);
     }
 
     private <T extends Identifier> ValidationHandler validateIds(
