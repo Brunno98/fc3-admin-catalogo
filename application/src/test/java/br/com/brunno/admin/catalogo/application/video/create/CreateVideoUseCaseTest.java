@@ -1,6 +1,7 @@
 package br.com.brunno.admin.catalogo.application.video.create;
 
 import br.com.brunno.admin.catalogo.application.Fixture;
+import br.com.brunno.admin.catalogo.domain.DomainId;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
@@ -27,17 +28,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -112,7 +110,7 @@ public class CreateVideoUseCaseTest {
 
         when(mediaResourceGateway.storeAudioVideo(any(), any()))
                 .thenReturn(AudioVideoMedia.with(
-                        UUID.randomUUID().toString(),
+                        DomainId.generate().getValue(),
                         "audioVideoMedia",
                         "/location",
                         "",
@@ -121,7 +119,7 @@ public class CreateVideoUseCaseTest {
 
         when(mediaResourceGateway.storeImage(any(), any()))
                 .thenReturn(ImageMedia.with(
-                        UUID.randomUUID().toString(),
+                        DomainId.generate().getValue(),
                         "audioVideoMedia",
                         "/location"
                 ));
@@ -202,7 +200,7 @@ public class CreateVideoUseCaseTest {
 
         when(mediaResourceGateway.storeAudioVideo(any(), any()))
                 .thenReturn(AudioVideoMedia.with(
-                        UUID.randomUUID().toString(),
+                        DomainId.generate().getValue(),
                         "audioVideoMedia",
                         "/location",
                         "",
@@ -211,7 +209,7 @@ public class CreateVideoUseCaseTest {
 
         when(mediaResourceGateway.storeImage(any(), any()))
                 .thenReturn(ImageMedia.with(
-                        UUID.randomUUID().toString(),
+                        DomainId.generate().getValue(),
                         "audioVideoMedia",
                         "/location"
                 ));

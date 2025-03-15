@@ -1,9 +1,9 @@
 package br.com.brunno.admin.catalogo.domain.video;
 
+import br.com.brunno.admin.catalogo.domain.DomainId;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class VideoID extends Identifier {
 
@@ -14,10 +14,10 @@ public class VideoID extends Identifier {
     }
 
     public static VideoID unique() {
-        return VideoID.from(UUID.randomUUID());
+        return VideoID.from(DomainId.generate());
     }
 
-    public static VideoID from(UUID anId) {
+    public static VideoID from(DomainId anId) {
         return VideoID.from(anId.toString().toLowerCase());
     }
 
