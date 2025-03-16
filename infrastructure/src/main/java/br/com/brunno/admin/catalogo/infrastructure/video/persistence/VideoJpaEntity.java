@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 public class VideoJpaEntity {
 
     @Id
+    @Column(name = "id", nullable = false)
     private String id;
 
     @Column(name = "title", nullable = false)

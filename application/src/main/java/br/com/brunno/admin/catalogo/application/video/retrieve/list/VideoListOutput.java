@@ -6,6 +6,7 @@ import br.com.brunno.admin.catalogo.domain.genre.Genre;
 import br.com.brunno.admin.catalogo.domain.video.Video;
 import br.com.brunno.admin.catalogo.domain.video.VideoConsolidated;
 import br.com.brunno.admin.catalogo.domain.video.VideoID;
+import br.com.brunno.admin.catalogo.domain.video.VideoPreview;
 
 import java.time.Instant;
 import java.util.List;
@@ -28,6 +29,19 @@ public record VideoListOutput(
                 videos.getDescription(),
                 videos.getCreatedAt(),
                 videos.getUpdatedAt(),
+                null,
+                null,
+                null
+        );
+    }
+
+    public static VideoListOutput from(VideoPreview videos) {
+        return new VideoListOutput(
+                VideoID.from(videos.id()),
+                videos.title(),
+                videos.description(),
+                videos.createdAt(),
+                videos.updatedAt(),
                 null,
                 null,
                 null
