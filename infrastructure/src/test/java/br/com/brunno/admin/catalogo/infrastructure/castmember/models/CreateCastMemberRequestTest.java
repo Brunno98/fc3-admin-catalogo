@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.castmember.models;
 
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.JacksonTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class CreateCastMemberRequestTest {
     @Test
     void testUnmarshall() throws Exception {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type().name();
+        final var expectedType = Fixture.CastMembers.type().name();
 
         final var json = """
         {

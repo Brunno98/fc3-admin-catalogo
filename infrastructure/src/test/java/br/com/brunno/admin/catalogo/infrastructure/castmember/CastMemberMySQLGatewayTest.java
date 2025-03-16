@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.castmember;
 
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.MySQLGatewayTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
@@ -33,7 +33,7 @@ class CastMemberMySQLGatewayTest {
     @Test
     void givenAValidCastMember_whenCreateACastMember_shouldCreateACastMember() {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var castMember = CastMember.create(expectedName, expectedType);
         final var expectedId = castMember.getId();
 
@@ -85,7 +85,7 @@ class CastMemberMySQLGatewayTest {
 
     @Test
     void givenAValidCastMemberId_whenDeleteACastMember_shouldDeleteIt() {
-        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMember.type());
+        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMembers.type());
         final var castMemberId = aCastMember.getId();
 
         castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(aCastMember));
@@ -99,7 +99,7 @@ class CastMemberMySQLGatewayTest {
 
     @Test
     void givenAnExistentCastMemberId_whenGetById_shouldRetrieveIt() {
-        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMember.type());
+        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMembers.type());
         castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(aCastMember));
 
         final var actualCastMember = castMemberMySQLGateway.findById(aCastMember.getId()).get();
@@ -132,9 +132,9 @@ class CastMemberMySQLGatewayTest {
         final var expectedPage = 0;
         final var expectedTotalItems = 1;
 
-        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMember.type());
-        final var jackChan = CastMember.create("Jack Chan", Fixture.CastMember.type());
-        final var leonardoDiCaprio = CastMember.create("Leonardo DiCaprio", Fixture.CastMember.type());
+        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMembers.type());
+        final var jackChan = CastMember.create("Jack Chan", Fixture.CastMembers.type());
+        final var leonardoDiCaprio = CastMember.create("Leonardo DiCaprio", Fixture.CastMembers.type());
 
         assertEquals(0, castMemberRepository.count());
 
@@ -180,9 +180,9 @@ class CastMemberMySQLGatewayTest {
         final var expectedPage = 0;
         final var expectedTotalItems = 3;
 
-        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMember.type());
-        final var jackChan = CastMember.create("Jack Chan", Fixture.CastMember.type());
-        final var leonardoDiCaprio = CastMember.create("Leonardo DiCaprio", Fixture.CastMember.type());
+        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMembers.type());
+        final var jackChan = CastMember.create("Jack Chan", Fixture.CastMembers.type());
+        final var leonardoDiCaprio = CastMember.create("Leonardo DiCaprio", Fixture.CastMembers.type());
 
         assertEquals(0, castMemberRepository.count());
 
@@ -218,11 +218,11 @@ class CastMemberMySQLGatewayTest {
             final int perPage,
             final String castMembers
     ) {
-        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMember.type());
-        final var jackChan = CastMember.create("Jack Chan", Fixture.CastMember.type());
-        final var leonardoDiCaprio = CastMember.create("Leonardo DiCaprio", Fixture.CastMember.type());
-        final var tomCruise = CastMember.create("Tom Cruise", Fixture.CastMember.type());
-        final var willSmith = CastMember.create("Will Smith", Fixture.CastMember.type());
+        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMembers.type());
+        final var jackChan = CastMember.create("Jack Chan", Fixture.CastMembers.type());
+        final var leonardoDiCaprio = CastMember.create("Leonardo DiCaprio", Fixture.CastMembers.type());
+        final var tomCruise = CastMember.create("Tom Cruise", Fixture.CastMembers.type());
+        final var willSmith = CastMember.create("Will Smith", Fixture.CastMembers.type());
 
         assertEquals(0, castMemberRepository.count());
 

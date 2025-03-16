@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.castmember.retrieve.get;
 
-import br.com.brunno.admin.catalogo.application.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;

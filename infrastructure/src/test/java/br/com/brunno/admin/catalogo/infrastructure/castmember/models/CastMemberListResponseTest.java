@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.castmember.models;
 
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.JacksonTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import org.assertj.core.api.Assertions;
@@ -20,7 +20,7 @@ class CastMemberListResponseTest {
     void testMarshall() throws Exception{
         final var expectedId = CastMemberID.unique();
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var expectedCreatedDate = Instant.now();
         final var expectedUpdatedDate = Instant.now();
 

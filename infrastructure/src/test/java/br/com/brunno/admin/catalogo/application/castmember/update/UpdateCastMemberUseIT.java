@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.castmember.update;
 
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.IntegrationTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
@@ -53,7 +53,7 @@ public class UpdateCastMemberUseIT {
         castMemberGateway.create(aCastMember);
         final var castMemberId = aCastMember.getId();
         final String inputName = null;
-        final var inputType = Fixture.CastMember.type();
+        final var inputType = Fixture.CastMembers.type();
         final var aCommand = UpdateCastMemberCommand.with(castMemberId, inputName, inputType);
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'name' should not be null";
@@ -87,7 +87,7 @@ public class UpdateCastMemberUseIT {
     void givenANonExistentId_whenCallsUpdateCastMember_shouldThrowsNotFoundException() {
         final var castMemberId = CastMemberID.from("123");
         final String inputName = Fixture.name();
-        final var inputType = Fixture.CastMember.type();
+        final var inputType = Fixture.CastMembers.type();
         final var aCommand = UpdateCastMemberCommand.with(castMemberId, inputName, inputType);
         final var expectedErrorMessage = "CastMember with ID '%s' not found".formatted(castMemberId.getValue());
 

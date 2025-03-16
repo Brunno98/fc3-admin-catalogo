@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.video.create;
 
-import br.com.brunno.admin.catalogo.application.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.domain.DomainId;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;

@@ -1,7 +1,7 @@
 package br.com.brunno.admin.catalogo.e2e.castmember;
 
 import br.com.brunno.admin.catalogo.E2ETest;
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
 import br.com.brunno.admin.catalogo.e2e.MockDSL;
 import br.com.brunno.admin.catalogo.infrastructure.castmember.persistence.CastMemberJpaEntity;
@@ -61,7 +61,7 @@ public class CastMemberE2ETest implements MockDSL {
     @Test
     void givenAValidParams_shouldCreateACastMember() {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
 
         assertEquals(0, castMemberRepository.count());
 
@@ -81,7 +81,7 @@ public class CastMemberE2ETest implements MockDSL {
     @Test
     void givenAValidCastMemberId_whenCallsGetById_shouldReturnIt() {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var castMemberId = this.givenACastMember(expectedName, expectedType);
 
         final var actualCastMember = this.retrieveCastMember(castMemberId);
@@ -96,7 +96,7 @@ public class CastMemberE2ETest implements MockDSL {
     @Test
     void givenAValidParams_whenCallsUpdate_shouldUpdateIt() {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var castMemberId = this.givenACastMember("Vin Diesel", CastMemberType.ACTOR);
 
         this.updateCastMember(castMemberId, expectedName, expectedType);
@@ -113,7 +113,7 @@ public class CastMemberE2ETest implements MockDSL {
 
     @Test
     void givenAExistentId_whenCallsDelete_shouldDeleteIt() {
-        final var castMemberId = this.givenACastMember(Fixture.name(), Fixture.CastMember.type());
+        final var castMemberId = this.givenACastMember(Fixture.name(), Fixture.CastMembers.type());
 
         assertTrue(this.castMemberRepository.findById(castMemberId.getValue()).isPresent());
 

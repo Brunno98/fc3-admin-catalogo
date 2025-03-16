@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.castmember.retrieve.get;
 
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.IntegrationTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
@@ -27,7 +27,7 @@ class GetCastMemberUseIT {
     @Test
     void givenAValidId_whenCallsGetById_shouldReturnTheCastMember() {
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var castMember = CastMember.create(expectedName, expectedType);
         castMemberGateway.create(castMember);
         final var expectedId = castMember.getId();

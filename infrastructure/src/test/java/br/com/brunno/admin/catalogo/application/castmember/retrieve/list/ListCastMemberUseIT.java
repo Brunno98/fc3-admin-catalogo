@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.castmember.retrieve.list;
 
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.IntegrationTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
@@ -25,8 +25,8 @@ public class ListCastMemberUseIT {
 
     @Test
     void givenAValidQuery_whenCallsListCastMember_shouldReturnCastMembers() {
-        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMember.type());
-        final var tomHanks = CastMember.create("Tom Hanks", Fixture.CastMember.type());
+        final var vinDiesel = CastMember.create("Vin Diesel", Fixture.CastMembers.type());
+        final var tomHanks = CastMember.create("Tom Hanks", Fixture.CastMembers.type());
         final var castMembers = List.of(vinDiesel,tomHanks);
         castMembers.forEach(castMemberGateway::create);
 

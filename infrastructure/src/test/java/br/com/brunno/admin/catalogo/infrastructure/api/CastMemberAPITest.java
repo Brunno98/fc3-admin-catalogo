@@ -1,7 +1,7 @@
 package br.com.brunno.admin.catalogo.infrastructure.api;
 
 import br.com.brunno.admin.catalogo.ControllerTest;
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.application.castmember.create.CreateCastMemberOutput;
 import br.com.brunno.admin.catalogo.application.castmember.create.CreateCastMemberUseCase;
 import br.com.brunno.admin.catalogo.application.castmember.delete.DeleteCastMemberUseCase;
@@ -77,7 +77,7 @@ public class CastMemberAPITest {
     @Test
     void givenAValidParams_whenCreateACastMember_shouldReturnItsIdentifier() throws Exception {
         final var inputName = Fixture.name();
-        final var inputType = Fixture.CastMember.type();
+        final var inputType = Fixture.CastMembers.type();
         final var expectedId = CastMemberID.unique().getValue();
         final var createCastMemberRequest = new CreateCastMemberRequest(inputName, inputType.name());
 
@@ -95,7 +95,7 @@ public class CastMemberAPITest {
 
     @Test
     void givenAnInvalidParams_whenCreateACastMemberThrowsDomainException_shouldReturnsUnprocessableEntity() throws Exception {
-        final var createCastMemberRequest = new CreateCastMemberRequest(Fixture.name(), Fixture.CastMember.type().name());
+        final var createCastMemberRequest = new CreateCastMemberRequest(Fixture.name(), Fixture.CastMembers.type().name());
         final var expectedErrorMessage = "Domain exception was thrown";
 
         Mockito.doThrow(DomainException.with(new Error(expectedErrorMessage)))
@@ -134,7 +134,7 @@ public class CastMemberAPITest {
     @Test
     void givenAValidId_whenCallsGetById_shouldReturnIt() throws Exception{
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var aCastMember = CastMember.create(expectedName, expectedType);
         final var expectedId = aCastMember.getId();
 
@@ -168,7 +168,7 @@ public class CastMemberAPITest {
     @Test
     void givenAValidParams_whenUpdateACastMember_shouldUpdateIt() throws Exception {
         final var expectedId = CastMemberID.unique().getValue();
-        final var updateCastMemberRequest = new UpdateCastMemberRequest(Fixture.name(), Fixture.CastMember.type().name());
+        final var updateCastMemberRequest = new UpdateCastMemberRequest(Fixture.name(), Fixture.CastMembers.type().name());
 
         Mockito.doReturn(new UpdateCastMemberOutput(CastMemberID.from(expectedId)))
                 .when(updateCastMemberUseCase).execute(any());
@@ -183,7 +183,7 @@ public class CastMemberAPITest {
 
     @Test
     void givenAnInvalidParams_whenUpdateACastMemberThrowsDomainException_shouldReturnsUnprocessableEntity() throws Exception {
-        final var updateCastMemberRequest = new UpdateCastMemberRequest(Fixture.name(), Fixture.CastMember.type().name());
+        final var updateCastMemberRequest = new UpdateCastMemberRequest(Fixture.name(), Fixture.CastMembers.type().name());
         final var expectedErrorMessage = "Domain exception was thrown";
 
         Mockito.doThrow(DomainException.with(new Error(expectedErrorMessage)))
@@ -223,7 +223,7 @@ public class CastMemberAPITest {
     void givenANonExistentId_whenCallsUpdate_shouldReturnNotFound() throws Exception{
         final var expectedId = CastMemberID.from("non existent");
         final var expectedMessage = "CastMember with ID 'non existent' not found";
-        final var updateCastMemberRequest = new UpdateCastMemberRequest(Fixture.name(), Fixture.CastMember.type().name());
+        final var updateCastMemberRequest = new UpdateCastMemberRequest(Fixture.name(), Fixture.CastMembers.type().name());
 
         Mockito.doThrow(NotFoundException.with(CastMember.class, expectedId))
                 .when(updateCastMemberUseCase).execute(any());
@@ -255,7 +255,7 @@ public class CastMemberAPITest {
         final var expectedSort = "name";
         final var expectedDirection = "asc";
         final var expectedTotalItems = 1;
-        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMember.type());
+        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMembers.type());
         final var expectedItems = List.of(CastMemberListOutput.from(aCastMember));
         final var expectedItemsCount = expectedItems.size();
 

@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.castmember.delete;
 
-import br.com.brunno.admin.catalogo.Fixture;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.IntegrationTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
@@ -29,7 +29,7 @@ public class DeleteCastMemberUseIT {
 
     @Test
     void givenAValidCastMemberId_whenCallsDelete_shouldDeleteId() {
-        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMember.type());
+        final var aCastMember = CastMember.create(Fixture.name(), Fixture.CastMembers.type());
         final var castMemberId = aCastMember.getId();
 
         castMemberGateway.create(aCastMember);
@@ -43,7 +43,7 @@ public class DeleteCastMemberUseIT {
 
     @Test
     void givenANonExistentCastMemberId_whenCallsDelete_shouldDoNothing() {
-        final var existentCastMember = CastMember.create(Fixture.name(), Fixture.CastMember.type());
+        final var existentCastMember = CastMember.create(Fixture.name(), Fixture.CastMembers.type());
         castMemberGateway.create(existentCastMember);
         assertTrue(castMemberGateway.findById(existentCastMember.getId()).isPresent());
 
