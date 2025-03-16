@@ -9,6 +9,8 @@ import br.com.brunno.admin.catalogo.domain.video.VideoID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -52,7 +54,7 @@ public class VideoJpaEntity {
     private boolean published;
 
     @Column(name = "rating", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = VideoRatingConverter.class)
     private Rating rating;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
