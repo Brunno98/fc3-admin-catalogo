@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.video.persistence;
 
+import br.com.brunno.admin.catalogo.domain.DomainId;
 import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
 import br.com.brunno.admin.catalogo.domain.video.MediaStatus;
 
@@ -17,6 +18,9 @@ public class AudioVideoMediaJpaEntity {
     @Id
     private String id;
 
+    @Column(name = "checksum", nullable = false)
+    private String checksum;
+
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -27,19 +31,21 @@ public class AudioVideoMediaJpaEntity {
     private String encodedPath;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "video_status", nullable = false)
     private MediaStatus status;
 
     public AudioVideoMediaJpaEntity() {}
 
     private AudioVideoMediaJpaEntity(
             String id,
+            String checksum,
             String name,
             String filePath,
             String encodedPath,
             MediaStatus status
     ) {
         this.id = id;
+        this.checksum = checksum;
         this.name = name;
         this.filePath = filePath;
         this.encodedPath = encodedPath;
@@ -48,6 +54,7 @@ public class AudioVideoMediaJpaEntity {
 
     public static AudioVideoMediaJpaEntity from(AudioVideoMedia media) {
         return new AudioVideoMediaJpaEntity(
+                media.id().getValue(),
                 media.checksum(),
                 media.name(),
                 media.rawLocation(),
@@ -58,7 +65,8 @@ public class AudioVideoMediaJpaEntity {
 
     public AudioVideoMedia toDomain() {
         return AudioVideoMedia.with(
-                getId(),
+                DomainId.from(getId()),
+                getChecksum(),
                 getName(),
                 getFilePath(),
                 getEncodedPath(),
@@ -68,6 +76,10 @@ public class AudioVideoMediaJpaEntity {
 
     public String getId() {
         return id;
+    }
+
+    public String getChecksum() {
+        return checksum;
     }
 
     public String getName() {

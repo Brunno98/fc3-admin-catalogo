@@ -110,16 +110,14 @@ public class CreateVideoUseCaseTest {
 
         when(mediaResourceGateway.storeAudioVideo(any(), any()))
                 .thenReturn(AudioVideoMedia.with(
-                        DomainId.generate().getValue(),
+                        "some checksum",
                         "audioVideoMedia",
-                        "/location",
-                        "",
-                        MediaStatus.PENDING
+                        "/location"
                 ));
 
         when(mediaResourceGateway.storeImage(any(), any()))
                 .thenReturn(ImageMedia.with(
-                        DomainId.generate().getValue(),
+                        "some checksum",
                         "audioVideoMedia",
                         "/location"
                 ));
@@ -200,16 +198,14 @@ public class CreateVideoUseCaseTest {
 
         when(mediaResourceGateway.storeAudioVideo(any(), any()))
                 .thenReturn(AudioVideoMedia.with(
-                        DomainId.generate().getValue(),
+                        "some checksum",
                         "audioVideoMedia",
-                        "/location",
-                        "",
-                        MediaStatus.PENDING
+                        "/location"
                 ));
 
         when(mediaResourceGateway.storeImage(any(), any()))
                 .thenReturn(ImageMedia.with(
-                        DomainId.generate().getValue(),
+                        "some checksum",
                         "audioVideoMedia",
                         "/location"
                 ));

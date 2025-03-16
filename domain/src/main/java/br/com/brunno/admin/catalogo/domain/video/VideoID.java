@@ -29,4 +29,16 @@ public class VideoID extends Identifier {
     public String getValue() {
         return this.value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        VideoID videoID = (VideoID) o;
+        return Objects.equals(getValue(), videoID.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getValue());
+    }
 }

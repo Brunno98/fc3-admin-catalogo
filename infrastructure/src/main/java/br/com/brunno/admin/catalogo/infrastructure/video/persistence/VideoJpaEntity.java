@@ -125,6 +125,7 @@ public class VideoJpaEntity {
         this.thumbnailHalf = thumbnailHalf;
         this.categories = new HashSet<>(3);
         this.genres = new HashSet<>(3);
+        this.castMembers = new HashSet<>(3);
     }
 
     public static VideoJpaEntity from(Video aVideo) {

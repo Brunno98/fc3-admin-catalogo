@@ -19,6 +19,10 @@ public class DomainId extends ValueObject {
         return new DomainId(UUID.randomUUID().toString());
     }
 
+    public static DomainId from(String value) {
+        return new DomainId(value);
+    }
+
     private String format(String value) {
         return value.toLowerCase().replace("-", "");
     }

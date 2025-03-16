@@ -10,7 +10,10 @@ import org.junit.jupiter.api.Test;
 import java.time.Year;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VideoTest {
 
@@ -144,7 +147,7 @@ public class VideoTest {
         final var actualVideo = Video.with(initialVideo);
 
         final var aVideoMedia = AudioVideoMedia
-                .with("abc", "Video.mp4", "/123/video.mp4", "", MediaStatus.PENDING);
+                .with("abc", "Video.mp4", "/123/video.mp4");
         actualVideo.setVideo(aVideoMedia);
 
         assertEquals(aVideoMedia, actualVideo.getVideo().get());
@@ -180,7 +183,7 @@ public class VideoTest {
         final var actualVideo = Video.with(initialVideo);
 
         final var aTrailerMedia = AudioVideoMedia
-                .with("abc", "Trailer.mp4", "/123/trailer.mp4", "", MediaStatus.PENDING);
+                .with("abc", "Trailer.mp4", "/123/trailer.mp4");
         actualVideo.setTrailer(aTrailerMedia);
 
         assertEquals(aTrailerMedia, actualVideo.getTrailer().get());
