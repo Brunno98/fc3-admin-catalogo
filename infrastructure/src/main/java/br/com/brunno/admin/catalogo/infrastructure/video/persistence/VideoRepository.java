@@ -12,7 +12,7 @@ import java.util.List;
 public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
 
     @Query("""
-            SELECT new br.com.brunno.admin.catalogo.domain.video.VideoPreview(
+            SELECT DISTINCT new br.com.brunno.admin.catalogo.domain.video.VideoPreview(
                 v.id as id,
                 v.title as title,
                 v.description as description,
@@ -20,17 +20,17 @@ public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
                 v.updatedAt as updatedAt
             )
             FROM Video v
-                JOIN v.castMembers members
-                JOIN v.genres genres
-                JOIN v.categories categories
+                LEFT JOIN v.castMembers members
+                LEFT JOIN v.genres genres
+                LEFT JOIN v.categories categories
             WHERE
                 ( :terms is null or UPPER(v.title) LIKE :terms)
             AND
-                ( :genres is null or genres.id in :genres)
+                ( :genres is null or genres.id.genreId in :genres)
             AND
-                ( :categories is null or categories.id in :categories)
+                ( :categories is null or categories.id.categoryId in :categories)
             AND
-                ( :members is null or members.id in :members)
+                ( :members is null or members.id.castMemberId in :members)
             """)
     Page<VideoPreview> findAll(
             @Param("terms") String terms,

@@ -1,7 +1,7 @@
 package br.com.brunno.admin.catalogo.infrastructure.video;
 
-import br.com.brunno.admin.catalogo.CleanupMySQLExtension;
 import br.com.brunno.admin.catalogo.IntegrationTest;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
@@ -12,24 +12,30 @@ import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
 import br.com.brunno.admin.catalogo.domain.genre.GenreGateway;
 import br.com.brunno.admin.catalogo.domain.genre.GenreID;
+import br.com.brunno.admin.catalogo.domain.pagination.SearchQuery;
 import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
 import br.com.brunno.admin.catalogo.domain.video.ImageMedia;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
 import br.com.brunno.admin.catalogo.domain.video.Video;
 import br.com.brunno.admin.catalogo.domain.video.VideoID;
+import br.com.brunno.admin.catalogo.domain.video.VideoSearchQuery;
+import br.com.brunno.admin.catalogo.infrastructure.genre.persistence.GenreJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoCastMemberID;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoCastMemberJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoCategoryID;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoCategoryJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoGenreId;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoGenreJpaEntity;
+import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.time.Year;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,6 +61,13 @@ class DefaultVideoGatewayTest  {
 
     @Autowired
     private VideoRepository videoRepository;
+    
+    private final Category filme = Category.newCategory("Filme", null, true);
+    private final Category serie = Category.newCategory("Serie", null, true);
+    private final Genre aventura = Genre.newGenre("Aventura", true, List.of());
+    private final Genre suspense = Genre.newGenre("Suspense", true, List.of());
+    private final CastMember tomHanks = CastMember.create("Tom Hanks", CastMemberType.ACTOR);
+    private final CastMember vinDiesel = CastMember.create("Vin Diesel", CastMemberType.ACTOR);
 
     @Test
     void testInjection() {
@@ -491,5 +504,393 @@ class DefaultVideoGatewayTest  {
         final var actualVideo = videoGateway.findById(nonExistentId);
 
         assertTrue(actualVideo.isEmpty());
+    }
+
+    @Test
+    @Transactional
+    void givenEmptyParams_whenCallFindAll_shouldReturnAllList() {
+        mockVideos();
+
+        final var expectedPage = 0;
+        final var expectedPerPage = 10;
+        final String expectedTerms = null;
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+        final var expectedTotal = 4;
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of()
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        System.out.println(
+                actualResult.items().stream().map(it -> it.title())
+                        .collect(Collectors.joining(", "))
+        );
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedTotal, actualResult.items().size());
+    }
+
+    @Test
+    void givenEmptyVideos_whenCallFindAll_shouldReturnEmptyList() {
+
+        final var expectedPage = 0;
+        final var expectedPerPage = 10;
+        final var expectedTerms = "";
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+        final var expectedTotal = 0;
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of()
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedTotal, actualResult.items().size());
+    }
+
+    @Test
+    void givenAValidCategories_whenCallFindAll_shouldReturnFilteredList() {
+        mockVideos();
+
+        final var expectedPage = 0;
+        final var expectedPerPage = 10;
+        final var expectedTerms = "";
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+        final var expectedTotal = 2;
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(filme.getId()),
+                Set.of(),
+                Set.of()
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        System.out.println(
+                actualResult.items().stream().map(it -> it.title())
+                        .collect(Collectors.joining(", "))
+        );
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedTotal, actualResult.items().size());
+        assertEquals("Sombras do Amanhã", actualResult.items().get(0).title());
+        assertEquals("Tempestade Lunar", actualResult.items().get(1).title());
+    }
+
+    @Test
+    void givenAValidCastMember_whenCallFindAll_shouldReturnFilteredList() {
+        mockVideos();
+
+        final var expectedPage = 0;
+        final var expectedPerPage = 10;
+        final var expectedTerms = "";
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+        final var expectedTotal = 2;
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of(tomHanks.getId())
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedTotal, actualResult.items().size());
+        assertEquals("Ruínas do Destino", actualResult.items().get(0).title());
+        assertEquals("Sombras do Amanhã", actualResult.items().get(1).title());
+
+    }
+
+    @Test
+    void givenAValidGenre_whenCallFindAll_shouldReturnFilteredList() {
+        mockVideos();
+
+        final var expectedPage = 0;
+        final var expectedPerPage = 10;
+        final var expectedTerms = "";
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+        final var expectedTotal = 2;
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(),
+                Set.of(suspense.getId()),
+                Set.of()
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedTotal, actualResult.items().size());
+        assertEquals("Sombras do Amanhã", actualResult.items().get(0).title());
+        assertEquals("Tempestade Lunar", actualResult.items().get(1).title());
+    }
+
+    @Test
+    void givenAllParams_whenCallFindAll_shouldReturnFilteredList() {
+        mockVideos();
+
+        final var expectedPage = 0;
+        final var expectedPerPage = 10;
+        final var expectedTerms = "";
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+        final var expectedTotal = 2;
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(filme.getId()),
+                Set.of(suspense.getId()),
+                Set.of(vinDiesel.getId())
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedTotal, actualResult.items().size());
+        assertEquals("Sombras do Amanhã", actualResult.items().get(0).title());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0,2,2,4,O Último Código;Ruínas do Destino",
+            "1,2,2,4,Sombras do Amanhã;Tempestade Lunar",
+    })
+    void givenAValidPaging_whenCallFindAll_shouldReturnPaged(
+            final int expectedPage,
+            final int expectedPerPage,
+            final int expectedItemsCount,
+            final int expectedTotal,
+            final String expectedVideos
+    ) {
+        mockVideos();
+        final var expectedTerms = "";
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of()
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedItemsCount, actualResult.items().size());
+        var index = 0;
+        for (String expectedGenreName : expectedVideos.split(";")) {
+            assertEquals(expectedGenreName, actualResult.items().get(index++).title());
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "somb,0,10,1,1,Sombras do Amanhã",
+            "ódig,0,10,1,1,O Último Código",
+            "nar,0,10,1,1,Tempestade Lunar",
+            "uín,0,10,1,1,Ruínas do Destino",
+    })
+    void givenAValidTerm_whenCallsFindAll_shouldReturnFiltered(
+            final String expectedTerms,
+            final int expectedPage,
+            final int expectedPerPage,
+            final int expectedItemsCount,
+            final int expectedTotal,
+            final String expectedGenreName
+    ) {
+        mockVideos();
+
+        final var expectedSort = "title";
+        final var expectedDirection = "asc";
+
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of()
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedItemsCount, actualResult.items().size());
+        assertEquals(expectedGenreName, actualResult.items().get(0).title());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "title,asc,0,10,4,4,O Último Código",
+            "title,desc,0,10,4,4,Tempestade Lunar",
+            "createdAt,asc,0,10,4,4,Sombras do Amanhã",
+            "createdAt,desc,0,10,4,4,Ruínas do Destino",
+    })
+    void givenAValidSortAndDirection_whenCallsFindAll_shouldReturnFiltered(
+            final String expectedSort,
+            final String expectedDirection,
+            final int expectedPage,
+            final int expectedPerPage,
+            final int expectedItemsCount,
+            final int expectedTotal,
+            final String expectedGenreName
+    ) {
+        mockVideos();
+
+        final var expectedTerms = "";
+        final var aQuery = new VideoSearchQuery(
+                expectedPage,
+                expectedPerPage,
+                expectedTerms,
+                expectedSort,
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of()
+        );
+
+        final var actualResult = videoGateway.findAll(aQuery);
+
+        assertEquals(expectedPage, actualResult.currentPage());
+        assertEquals(expectedPerPage, actualResult.perPage());
+        assertEquals(expectedTotal, actualResult.total());
+        assertEquals(expectedItemsCount, actualResult.items().size());
+        assertEquals(expectedGenreName, actualResult.items().get(0).title());
+    }
+
+    private void mockVideos() {
+        categoryGateway.create(this.filme);
+        categoryGateway.create(this.serie);
+
+
+        genreGateway.create(this.aventura);
+        genreGateway.create(this.suspense);
+
+        castMemberGateway.create(this.tomHanks);
+        castMemberGateway.create(this.vinDiesel);
+
+        final var sombrasDoAmanha = Video.newVideo(
+                "Sombras do Amanhã",
+                Fixture.Videos.description(),
+                Year.of(Fixture.year()),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                Fixture.Videos.rating(),
+                Set.of(filme.getId()),
+                Set.of(suspense.getId()),
+                Set.of(tomHanks.getId(), vinDiesel.getId())
+        );
+
+        final var oUltimoCodigo = Video.newVideo(
+                "O Último Código",
+                Fixture.Videos.description(),
+                Year.of(Fixture.year()),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                Fixture.Videos.rating(),
+                Set.of(),
+                Set.of(),
+                Set.of()
+        );
+
+        final var tempestadeLunar = Video.newVideo(
+                "Tempestade Lunar",
+                Fixture.Videos.description(),
+                Year.of(Fixture.year()),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                Fixture.Videos.rating(),
+                Set.of(filme.getId()),
+                Set.of(suspense.getId()),
+                Set.of(vinDiesel.getId())
+        );
+
+        final var ruinasDoDestino = Video.newVideo(
+                "Ruínas do Destino",
+                Fixture.Videos.description(),
+                Year.of(Fixture.year()),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                Fixture.Videos.rating(),
+                Set.of(serie.getId()),
+                Set.of(aventura.getId()),
+                Set.of(tomHanks.getId())
+        );
+
+        videoRepository.saveAllAndFlush(List.of(
+                VideoJpaEntity.from(sombrasDoAmanha),
+                VideoJpaEntity.from(oUltimoCodigo),
+                VideoJpaEntity.from(tempestadeLunar),
+                VideoJpaEntity.from(ruinasDoDestino)
+        ));
     }
 }
