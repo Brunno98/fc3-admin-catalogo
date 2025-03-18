@@ -74,7 +74,10 @@ public class GenreMySQLGateway implements GenreGateway {
 
     @Override
     public List<GenreID> existisByIds(List<GenreID> ids) {
-        throw new UnsupportedOperationException("Method not implemented");
+        final var idsAsString = ids.stream().map(GenreID::getValue).toList();
+        return genreRepository.existsByIds(idsAsString).stream()
+                .map(GenreID::from)
+                .toList();
     }
 
 }

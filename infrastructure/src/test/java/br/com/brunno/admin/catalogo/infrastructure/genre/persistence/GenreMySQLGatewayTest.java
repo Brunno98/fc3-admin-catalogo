@@ -1,6 +1,7 @@
 package br.com.brunno.admin.catalogo.infrastructure.genre.persistence;
 
 import br.com.brunno.admin.catalogo.MySQLGatewayTest;
+import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.domain.category.Category;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
@@ -336,6 +337,26 @@ public class GenreMySQLGatewayTest {
         for (String expectedGenreName : expectedGenres.split(";")) {
             assertEquals(expectedGenreName, actualResult.items().get(index++).getName());
         }
+    }
+
+    @Test
+    void givenAGenreList_whenCallsExistsByIds_shouldReturnTheExistentIds() {
+        final var expectedExistentCategories = 2;
+
+        final var acao = Genre.newGenre("Ação", true);
+        final var terror = Genre.newGenre("Terror", true);
+
+        genreRepository.saveAllAndFlush(List.of(
+                GenreJpaEntity.from(acao),
+                GenreJpaEntity.from(terror)
+        ));
+
+        final var actualGereIds = genreGateway
+                .existisByIds(List.of(acao.getId(), terror.getId(), GenreID.from("non-existent")));
+
+        assertEquals(expectedExistentCategories, actualGereIds.size());
+        assertTrue(actualGereIds.contains(acao.getId()));
+        assertTrue(actualGereIds.contains(terror.getId()));
     }
 
     private List<CategoryId> sorted(List<CategoryId> categories) {
