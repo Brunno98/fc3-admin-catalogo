@@ -3,6 +3,7 @@ package br.com.brunno.admin.catalogo.infrastructure.castmember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
+import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.pagination.Pagination;
 import br.com.brunno.admin.catalogo.domain.pagination.SearchQuery;
 import br.com.brunno.admin.catalogo.infrastructure.castmember.persistence.CastMemberJpaEntity;
@@ -74,7 +75,10 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
 
     @Override
     public List<CastMemberID> existisByIds(List<CastMemberID> ids) {
-        throw new UnsupportedOperationException("Method not implemented");
+        final var idsAsString = ids.stream().map(CastMemberID::getValue).toList();
+        return castMemberRepository.existsByIds(idsAsString).stream()
+                .map(CastMemberID::from)
+                .toList();
     }
 
     private CastMember save(CastMember aCastMember) {

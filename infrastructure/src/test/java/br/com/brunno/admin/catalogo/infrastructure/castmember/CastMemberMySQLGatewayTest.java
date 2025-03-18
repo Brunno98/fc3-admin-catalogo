@@ -5,9 +5,12 @@ import br.com.brunno.admin.catalogo.MySQLGatewayTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
+import br.com.brunno.admin.catalogo.domain.category.Category;
+import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.pagination.SearchQuery;
 import br.com.brunno.admin.catalogo.infrastructure.castmember.persistence.CastMemberJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.castmember.persistence.CastMemberRepository;
+import br.com.brunno.admin.catalogo.infrastructure.category.persistence.CategoryJpaEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -245,6 +248,26 @@ class CastMemberMySQLGatewayTest {
         for (final String expectedCastMemberName : castMembers.split(";")) {
             assertEquals(expectedCastMemberName, queryResult.items().get(count++).getName());
         }
+    }
+
+    @Test
+    void givenACastMemberList_whenCallsExistsByIds_shouldReturnTheExistentIds() {
+        final var expectedExistentCategories = 2;
+
+        final var cm1 = CastMember.create(Fixture.name(), Fixture.CastMembers.type());
+        final var cm2 = CastMember.create(Fixture.name(), Fixture.CastMembers.type());
+
+        castMemberRepository.saveAllAndFlush(List.of(
+                CastMemberJpaEntity.from(cm1),
+                CastMemberJpaEntity.from(cm2)
+        ));
+
+        final var actualCastMemberIds = castMemberMySQLGateway
+                .existisByIds(List.of(cm1.getId(), cm2.getId(), CastMemberID.from("non-existent")));
+
+        assertEquals(expectedExistentCategories, actualCastMemberIds.size());
+        assertTrue(actualCastMemberIds.contains(cm1.getId()));
+        assertTrue(actualCastMemberIds.contains(cm2.getId()));
     }
 
 }
