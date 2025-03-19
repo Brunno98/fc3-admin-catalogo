@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.video.update;
 
-import br.com.brunno.admin.catalogo.domain.video.Resource;
+import br.com.brunno.admin.catalogo.domain.resource.Resource;
 import br.com.brunno.admin.catalogo.domain.video.VideoID;
 
 import java.util.Optional;

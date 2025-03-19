@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.services.local;
 
-import br.com.brunno.admin.catalogo.domain.video.Resource;
+import br.com.brunno.admin.catalogo.domain.resource.Resource;
 import br.com.brunno.admin.catalogo.infrastructure.services.StorageService;
 
 import java.util.Collection;

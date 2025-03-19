@@ -1,6 +1,6 @@
 package br.com.brunno.admin.catalogo.application.video.create;
 
-import br.com.brunno.admin.catalogo.domain.video.Resource;
+import br.com.brunno.admin.catalogo.domain.resource.Resource;
 
 import java.util.Optional;
 import java.util.Set;

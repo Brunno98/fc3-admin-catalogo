@@ -17,6 +17,8 @@ import br.com.brunno.admin.catalogo.domain.video.MediaResourceGateway;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
 import br.com.brunno.admin.catalogo.domain.video.Video;
 import br.com.brunno.admin.catalogo.domain.video.VideoGateway;
+import br.com.brunno.admin.catalogo.domain.video.VideoMediaType;
+import br.com.brunno.admin.catalogo.domain.video.VideoResource;
 
 import java.time.Year;
 import java.util.ArrayList;
@@ -89,23 +91,23 @@ public class CreateVideoUseCase extends UseCase<CreateVideoCommand, CreateVideoO
 
         try {
             final var anAudioVideo = aCommand.getVideo()
-                    .map(it -> mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, VideoMediaType.VIDEO)))
                     .orElse(null);
 
             final var aTrailer = aCommand.getTrailer()
-                    .map(it -> mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, VideoMediaType.TRAILER)))
                     .orElse(null);
 
             final var aBanner = aCommand.getBanner()
-                    .map(it -> mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> mediaResourceGateway.storeImage(anId, VideoResource.with(it, VideoMediaType.BANNER)))
                     .orElse(null);
 
             final var aThumbnail = aCommand.getThumbnail()
-                    .map(it -> mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> mediaResourceGateway.storeImage(anId, VideoResource.with(it, VideoMediaType.THUMBNAIL)))
                     .orElse(null);
 
             final var aThumbnailHalf = aCommand.getThumbnailHalf()
-                    .map(it -> mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> mediaResourceGateway.storeImage(anId, VideoResource.with(it, VideoMediaType.THUMBNAIL_HALF)))
                     .orElse(null);
 
             aVideo.setVideo(anAudioVideo);

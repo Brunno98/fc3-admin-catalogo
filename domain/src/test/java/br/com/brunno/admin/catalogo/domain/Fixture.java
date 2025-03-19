@@ -2,7 +2,8 @@ package br.com.brunno.admin.catalogo.domain;
 
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
-import br.com.brunno.admin.catalogo.domain.video.Resource;
+import br.com.brunno.admin.catalogo.domain.resource.Resource;
+import br.com.brunno.admin.catalogo.domain.video.VideoMediaType;
 import com.github.javafaker.Faker;
 import io.vavr.API;
 
@@ -87,14 +88,15 @@ public final class Fixture {
             return FAKER.options().option(Rating.class);
         }
 
-        public static Resource resource(Resource.Type type) {
+        public static Resource resource(VideoMediaType type) {
             final String contentType = API.Match(type).of(
-                    Case($(List(Resource.Type.VIDEO, Resource.Type.TRAILER)::contains), "video/mp4"),
+                    Case($(List(VideoMediaType.VIDEO, VideoMediaType.TRAILER)::contains), "video/mp4"),
                     Case($(), "image/jpg")
             );
+            final String checksum = "checksum";
             final byte[] content = "Conteudo".getBytes();
 
-            return Resource.with(content, contentType, type.name().toLowerCase(), type);
+            return Resource.with(checksum, content, contentType, type.name().toLowerCase());
         }
     }
 }
