@@ -1,6 +1,7 @@
 package br.com.brunno.admin.catalogo.infrastructure.video;
 
 import br.com.brunno.admin.catalogo.domain.DomainId;
+import br.com.brunno.admin.catalogo.domain.resource.Resource;
 import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
 import br.com.brunno.admin.catalogo.domain.video.ImageMedia;
 import br.com.brunno.admin.catalogo.domain.video.MediaResourceGateway;
@@ -10,6 +11,8 @@ import br.com.brunno.admin.catalogo.domain.video.VideoResource;
 import br.com.brunno.admin.catalogo.infrastructure.configuration.properties.StorageProperties;
 import br.com.brunno.admin.catalogo.infrastructure.services.StorageService;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class DefaultMediaResourceGateway implements MediaResourceGateway {
@@ -46,6 +49,11 @@ public class DefaultMediaResourceGateway implements MediaResourceGateway {
         this.storageService.deleteAll(ids);
     }
 
+    @Override
+    public Optional<Resource> getResource(VideoID anId, VideoMediaType aType) {
+        return this.storageService.get(filename(aType));
+    }
+
     private String filename(final VideoMediaType type) {
         return filenamePattern.replace("{type}", type.name());
     }
@@ -55,8 +63,12 @@ public class DefaultMediaResourceGateway implements MediaResourceGateway {
     }
 
     private String filepath(VideoResource resource, VideoID id) {
+        return filepath(resource.type(), id);
+    }
+
+    private String filepath(VideoMediaType type, VideoID id) {
         return folder(id)
                 .concat("/")
-                .concat(filename(resource.type()));
+                .concat(filename(type));
     }
 }
