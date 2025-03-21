@@ -321,4 +321,24 @@ public class Video extends AggregateRoot<VideoID> {
         this.setCastMembers(castMembers);
         this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
+
+    //TODO: Sugestão da aula: Implementar o pattern Visitor
+    public Video processing(VideoMediaType type) {
+        if (VideoMediaType.VIDEO == type) {
+            getVideo().ifPresent(media -> setVideo(media.processing()));
+        } else if (VideoMediaType.TRAILER == type) {
+            getTrailer().ifPresent(media -> setTrailer(media.processing()));
+        }
+        return this;
+    }
+
+    //TODO: Sugestão da aula: Implementar o pattern Visitor
+    public Video completed(final VideoMediaType type, final String encodedLocation) {
+        if (VideoMediaType.VIDEO == type) {
+            getVideo().ifPresent(media -> setVideo(media.completed(encodedLocation)));
+        } else if (VideoMediaType.TRAILER == type) {
+            getTrailer().ifPresent(media -> setTrailer(media.completed(encodedLocation)));
+        }
+        return this;
+    }
 }

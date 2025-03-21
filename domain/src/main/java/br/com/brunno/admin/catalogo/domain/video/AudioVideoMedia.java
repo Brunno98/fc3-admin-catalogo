@@ -73,4 +73,26 @@ public class AudioVideoMedia extends ValueObject {
     public int hashCode() {
         return Objects.hash(checksum, rawLocation);
     }
+
+    public AudioVideoMedia processing() {
+        return new AudioVideoMedia(
+                id(),
+                checksum(),
+                name(),
+                rawLocation(),
+                encodedLocation(),
+                MediaStatus.PROCESSING
+        );
+    }
+    public AudioVideoMedia completed(final String encodedLocation) {
+        return new AudioVideoMedia(
+                id(),
+                checksum(),
+                name(),
+                rawLocation(),
+                encodedLocation,
+                MediaStatus.COMPLETED
+        );
+    }
+
 }
