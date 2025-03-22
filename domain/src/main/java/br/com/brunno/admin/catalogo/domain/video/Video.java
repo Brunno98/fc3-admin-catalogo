@@ -3,13 +3,16 @@ package br.com.brunno.admin.catalogo.domain.video;
 import br.com.brunno.admin.catalogo.domain.AggregateRoot;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
+import br.com.brunno.admin.catalogo.domain.event.DomainEvent;
 import br.com.brunno.admin.catalogo.domain.genre.GenreID;
 import br.com.brunno.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.time.Year;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -55,9 +58,10 @@ public class Video extends AggregateRoot<VideoID> {
             AudioVideoMedia video,
             Set<CategoryId> categories,
             Set<GenreID> genres,
-            Set<CastMemberID> castMembers
+            Set<CastMemberID> castMembers,
+            List<DomainEvent> domainEvents
     ) {
-        super(id);
+        super(id, domainEvents);
         this.id = id;
         this.title = title;
         this.description = description;
@@ -109,7 +113,8 @@ public class Video extends AggregateRoot<VideoID> {
                 null,
                 categories,
                 genres,
-                castMembers
+                castMembers,
+                null
         );
     }
 
@@ -151,7 +156,8 @@ public class Video extends AggregateRoot<VideoID> {
                 video,
                 categories,
                 genres,
-                castMembers
+                castMembers,
+                null
         );
     }
 
@@ -174,7 +180,8 @@ public class Video extends AggregateRoot<VideoID> {
                 video.getVideo().orElse(null),
                 new HashSet<>(video.getCategories()),
                 new HashSet<>(video.getGenres()),
-                new HashSet<>(video.getCastMembers())
+                new HashSet<>(video.getCastMembers()),
+                new ArrayList<>(video.getDomainEvents())
         );
     }
 
@@ -260,29 +267,37 @@ public class Video extends AggregateRoot<VideoID> {
         return Optional.ofNullable(video);
     }
 
-    public void setBanner(ImageMedia banner) {
+    public void updateBannerMedia(ImageMedia banner) {
         this.banner = banner;
         this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
-    public void setThumbnail(ImageMedia thumbnail) {
+    public void updateThumbnailMedia(ImageMedia thumbnail) {
         this.thumbnail = thumbnail;
         this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
-    public void setThumbnailHalf(ImageMedia thumbnailHalf) {
+    public void updateThumbnailHalfMedia(ImageMedia thumbnailHalf) {
         this.thumbnailHalf = thumbnailHalf;
         this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
     }
 
-    public void setTrailer(AudioVideoMedia trailer) {
+    public void updateTrailerMedia(AudioVideoMedia trailer) {
         this.trailer = trailer;
         this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
+
+        if (Objects.nonNull(trailer) && trailer.isProcessing()) {
+            this.registerDomainEvent(new VideoMediaCreated(this.getId().getValue(), trailer.rawLocation()));
+        }
     }
 
-    public void setVideo(AudioVideoMedia video) {
+    public void updateVideoMedia(AudioVideoMedia video) {
         this.video = video;
         this.updatedAt = Instant.now().truncatedTo(ChronoUnit.MICROS);
+
+        if (Objects.nonNull(video) && video.isProcessing()) {
+            this.registerDomainEvent(new VideoMediaCreated(this.getId().getValue(), video.rawLocation()));
+        }
     }
 
     private void setCategories(Set<CategoryId> categories) {
@@ -325,9 +340,9 @@ public class Video extends AggregateRoot<VideoID> {
     //TODO: Sugestão da aula: Implementar o pattern Visitor
     public Video processing(VideoMediaType type) {
         if (VideoMediaType.VIDEO == type) {
-            getVideo().ifPresent(media -> setVideo(media.processing()));
+            getVideo().ifPresent(media -> updateVideoMedia(media.processing()));
         } else if (VideoMediaType.TRAILER == type) {
-            getTrailer().ifPresent(media -> setTrailer(media.processing()));
+            getTrailer().ifPresent(media -> updateTrailerMedia(media.processing()));
         }
         return this;
     }
@@ -335,9 +350,9 @@ public class Video extends AggregateRoot<VideoID> {
     //TODO: Sugestão da aula: Implementar o pattern Visitor
     public Video completed(final VideoMediaType type, final String encodedLocation) {
         if (VideoMediaType.VIDEO == type) {
-            getVideo().ifPresent(media -> setVideo(media.completed(encodedLocation)));
+            getVideo().ifPresent(media -> updateVideoMedia(media.completed(encodedLocation)));
         } else if (VideoMediaType.TRAILER == type) {
-            getTrailer().ifPresent(media -> setTrailer(media.completed(encodedLocation)));
+            getTrailer().ifPresent(media -> updateTrailerMedia(media.completed(encodedLocation)));
         }
         return this;
     }

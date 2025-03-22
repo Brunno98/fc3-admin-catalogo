@@ -7,6 +7,8 @@ import br.com.brunno.admin.catalogo.domain.video.VideoGateway;
 import br.com.brunno.admin.catalogo.domain.video.VideoID;
 import br.com.brunno.admin.catalogo.domain.video.VideoPreview;
 import br.com.brunno.admin.catalogo.domain.video.VideoSearchQuery;
+import br.com.brunno.admin.catalogo.infrastructure.configuration.qualifiers.VideoCreatedQualifier;
+import br.com.brunno.admin.catalogo.infrastructure.services.EventService;
 import br.com.brunno.admin.catalogo.infrastructure.util.SqlUtils;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoRepository;
@@ -26,9 +28,14 @@ import java.util.Set;
 public class DefaultVideoGateway implements VideoGateway {
 
     private final VideoRepository videoRepository;
+    private final EventService eventService;
 
-    public DefaultVideoGateway(VideoRepository videoRepository) {
-        this.videoRepository = videoRepository;
+    public DefaultVideoGateway(
+            VideoRepository videoRepository,
+            @VideoCreatedQualifier EventService eventService
+    ) {
+        this.videoRepository = Objects.requireNonNull(videoRepository);
+        this.eventService = Objects.requireNonNull(eventService);
     }
 
     @Transactional
@@ -82,8 +89,12 @@ public class DefaultVideoGateway implements VideoGateway {
     }
 
     private Video save(Video aVideo) {
-        return this.videoRepository.save(VideoJpaEntity.from(aVideo))
+        final var video = this.videoRepository.save(VideoJpaEntity.from(aVideo))
                 .toAggregate();
+
+        video.publishDomainEvents(this.eventService::sendEvent);
+
+        return video;
     }
 
     private List<String> asString(Set<? extends Identifier> ids) {

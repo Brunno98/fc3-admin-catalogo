@@ -95,4 +95,7 @@ public class AudioVideoMedia extends ValueObject {
         );
     }
 
+    public boolean isProcessing() {
+        return MediaStatus.PENDING.equals(this.status());
+    }
 }

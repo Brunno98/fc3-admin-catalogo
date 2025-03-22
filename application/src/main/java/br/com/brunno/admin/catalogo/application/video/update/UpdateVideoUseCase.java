@@ -1,7 +1,6 @@
 package br.com.brunno.admin.catalogo.application.video.update;
 
 import br.com.brunno.admin.catalogo.application.UseCase;
-import br.com.brunno.admin.catalogo.application.video.create.CreateVideoCommand;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
@@ -115,11 +114,11 @@ public class UpdateVideoUseCase extends UseCase<UpdateVideoCommand, UpdateVideoO
                     .map(it -> mediaResourceGateway.storeImage(anId, VideoResource.with(it, VideoMediaType.THUMBNAIL_HALF)))
                     .orElse(null);
 
-            aVideo.setVideo(anAudioVideo);
-            aVideo.setTrailer(aTrailer);
-            aVideo.setBanner(aBanner);
-            aVideo.setThumbnail(aThumbnail);
-            aVideo.setThumbnailHalf(aThumbnailHalf);
+            aVideo.updateVideoMedia(anAudioVideo);
+            aVideo.updateTrailerMedia(aTrailer);
+            aVideo.updateBannerMedia(aBanner);
+            aVideo.updateThumbnailMedia(aThumbnail);
+            aVideo.updateThumbnailHalfMedia(aThumbnailHalf);
         } catch (Throwable t) {
             throw InternalErroException.with(
                     "An error was observed when update a video id:[%s]".formatted(anId.getValue()),

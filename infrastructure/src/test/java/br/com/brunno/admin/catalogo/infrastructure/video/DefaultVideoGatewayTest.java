@@ -12,14 +12,12 @@ import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
 import br.com.brunno.admin.catalogo.domain.genre.GenreGateway;
 import br.com.brunno.admin.catalogo.domain.genre.GenreID;
-import br.com.brunno.admin.catalogo.domain.pagination.SearchQuery;
 import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
 import br.com.brunno.admin.catalogo.domain.video.ImageMedia;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
 import br.com.brunno.admin.catalogo.domain.video.Video;
 import br.com.brunno.admin.catalogo.domain.video.VideoID;
 import br.com.brunno.admin.catalogo.domain.video.VideoSearchQuery;
-import br.com.brunno.admin.catalogo.infrastructure.genre.persistence.GenreJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoCastMemberID;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoCastMemberJpaEntity;
 import br.com.brunno.admin.catalogo.infrastructure.video.persistence.VideoCategoryID;
@@ -115,11 +113,11 @@ class DefaultVideoGatewayTest  {
                 expectedGenres,
                 expectedCastMembers
         );
-        aVideo.setVideo(anAudioVideo);
-        aVideo.setTrailer(aTrailer);
-        aVideo.setBanner(aBanner);
-        aVideo.setThumbnail(aThumbnail);
-        aVideo.setThumbnailHalf(aThumbnailHalf);
+        aVideo.updateVideoMedia(anAudioVideo);
+        aVideo.updateTrailerMedia(aTrailer);
+        aVideo.updateBannerMedia(aBanner);
+        aVideo.updateThumbnailMedia(aThumbnail);
+        aVideo.updateThumbnailHalfMedia(aThumbnailHalf);
 
         final var actualVideo = videoGateway.create(aVideo);
 
@@ -298,11 +296,11 @@ class DefaultVideoGatewayTest  {
                 expectedGenres,
                 expectedCastMembers
         );
-        updatedVideo.setVideo(anAudioVideo);
-        updatedVideo.setTrailer(aTrailer);
-        updatedVideo.setBanner(aBanner);
-        updatedVideo.setThumbnail(aThumbnail);
-        updatedVideo.setThumbnailHalf(aThumbnailHalf);
+        updatedVideo.updateVideoMedia(anAudioVideo);
+        updatedVideo.updateTrailerMedia(aTrailer);
+        updatedVideo.updateBannerMedia(aBanner);
+        updatedVideo.updateThumbnailMedia(aThumbnail);
+        updatedVideo.updateThumbnailHalfMedia(aThumbnailHalf);
 
         final var actualVideo = videoGateway.update(updatedVideo);
 
@@ -453,11 +451,11 @@ class DefaultVideoGatewayTest  {
                 expectedGenres,
                 expectedCastMembers
         );
-        aVideo.setVideo(anAudioVideo);
-        aVideo.setTrailer(aTrailer);
-        aVideo.setBanner(aBanner);
-        aVideo.setThumbnail(aThumbnail);
-        aVideo.setThumbnailHalf(aThumbnailHalf);
+        aVideo.updateVideoMedia(anAudioVideo);
+        aVideo.updateTrailerMedia(aTrailer);
+        aVideo.updateBannerMedia(aBanner);
+        aVideo.updateThumbnailMedia(aThumbnail);
+        aVideo.updateThumbnailHalfMedia(aThumbnailHalf);
 
         videoGateway.create(aVideo);
 

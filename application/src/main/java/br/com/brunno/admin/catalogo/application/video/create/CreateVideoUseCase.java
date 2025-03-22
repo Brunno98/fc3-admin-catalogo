@@ -110,11 +110,11 @@ public class CreateVideoUseCase extends UseCase<CreateVideoCommand, CreateVideoO
                     .map(it -> mediaResourceGateway.storeImage(anId, VideoResource.with(it, VideoMediaType.THUMBNAIL_HALF)))
                     .orElse(null);
 
-            aVideo.setVideo(anAudioVideo);
-            aVideo.setTrailer(aTrailer);
-            aVideo.setBanner(aBanner);
-            aVideo.setThumbnail(aThumbnail);
-            aVideo.setThumbnailHalf(aThumbnailHalf);
+            aVideo.updateVideoMedia(anAudioVideo);
+            aVideo.updateTrailerMedia(aTrailer);
+            aVideo.updateBannerMedia(aBanner);
+            aVideo.updateThumbnailMedia(aThumbnail);
+            aVideo.updateThumbnailHalfMedia(aThumbnailHalf);
 
             return videoGateway.create(aVideo);
         } catch (Throwable t) {

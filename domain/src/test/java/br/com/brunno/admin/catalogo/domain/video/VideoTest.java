@@ -57,6 +57,7 @@ public class VideoTest {
         assertEquals(expectedCategories, actualVideo.getCategories());
         assertEquals(expectedGenres, actualVideo.getGenres());
         assertEquals(expectedCastMembers, actualVideo.getCastMembers());
+        assertTrue(actualVideo.getDomainEvents().isEmpty());
 
         Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
@@ -73,6 +74,7 @@ public class VideoTest {
         final var expectedCategories = Set.of(CategoryId.unique());
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedCastMembers = Set.of(CastMemberID.unique());
+        final var expectedEvent = new VideoMediaCreated("ID", "FILE");
 
         final var aVideo = Video.newVideo(
                 "Test update title",
@@ -86,6 +88,7 @@ public class VideoTest {
                 Set.of(),
                 Set.of()
         );
+        aVideo.registerDomainEvent(expectedEvent);
 
         final var actualVideo = Video.with(aVideo);
         actualVideo.update(
@@ -115,12 +118,15 @@ public class VideoTest {
         assertEquals(expectedCastMembers, actualVideo.getCastMembers());
         assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
         assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        assertEquals(1, actualVideo.getDomainEvents().size());
+        assertEquals(expectedEvent, actualVideo.getDomainEvents().get(0));
 
         Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
 
     @Test
-    void givenAValidVideo_whenCallsSetVideo_shouldUpdateIt() {
+    void givenAValidVideo_whenCallsUpdateVideoMedia_shouldUpdateIt() {
+        // given
         final var expectedTitle = "Some title";
         final var expectedDescription = "a".repeat(4000);
         final var expectedLaunchedAt = Year.of(2022);
@@ -145,18 +151,24 @@ public class VideoTest {
                 expectedCastMembers
         );
         final var actualVideo = Video.with(initialVideo);
-
         final var aVideoMedia = AudioVideoMedia
                 .with("abc", "Video.mp4", "/123/video.mp4");
-        actualVideo.setVideo(aVideoMedia);
+        final var expectedEvent = new VideoMediaCreated(actualVideo.getId().getValue(), aVideoMedia.rawLocation());
 
+        // when
+        actualVideo.updateVideoMedia(aVideoMedia);
+
+        // then
         assertEquals(aVideoMedia, actualVideo.getVideo().get());
         assertNotEquals(initialVideo.getVideo(), actualVideo.getVideo());
         assertTrue(initialVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        assertEquals(1, actualVideo.getDomainEvents().size());
+        assertEquals(expectedEvent, actualVideo.getDomainEvents().get(0));
     }
 
     @Test
-    void givenAValidTrailer_whenCallsSetTrailer_shouldUpdateIt() {
+    void givenAValidTrailer_whenCallsUpdateTrailer_Media_shouldUpdateIt() {
+        // given
         final var expectedTitle = "Some title";
         final var expectedDescription = "a".repeat(4000);
         final var expectedLaunchedAt = Year.of(2022);
@@ -167,7 +179,6 @@ public class VideoTest {
         final var expectedCategories = Set.of(CategoryId.unique());
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedCastMembers = Set.of(CastMemberID.unique());
-
         final var initialVideo = Video.newVideo(
                 expectedTitle,
                 expectedDescription,
@@ -181,18 +192,23 @@ public class VideoTest {
                 expectedCastMembers
         );
         final var actualVideo = Video.with(initialVideo);
-
         final var aTrailerMedia = AudioVideoMedia
                 .with("abc", "Trailer.mp4", "/123/trailer.mp4");
-        actualVideo.setTrailer(aTrailerMedia);
+        final var expectedEvent = new VideoMediaCreated(actualVideo.getId().getValue(), aTrailerMedia.rawLocation());
 
+        // when
+        actualVideo.updateTrailerMedia(aTrailerMedia);
+
+        // then
         assertEquals(aTrailerMedia, actualVideo.getTrailer().get());
         assertNotEquals(initialVideo.getTrailer(), actualVideo.getTrailer());
         assertTrue(initialVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        assertEquals(1, actualVideo.getDomainEvents().size());
+        assertEquals(expectedEvent, actualVideo.getDomainEvents().get(0));
     }
 
     @Test
-    void givenAValidBanner_whenCallsSetBanner_shouldUpdateIt() {
+    void givenAValidBanner_whenCallsUpdateBanner_Media_shouldUpdateIt() {
         final var expectedTitle = "Some title";
         final var expectedDescription = "a".repeat(4000);
         final var expectedLaunchedAt = Year.of(2022);
@@ -220,7 +236,7 @@ public class VideoTest {
 
         final var aBannerImage = ImageMedia
                 .with("abc", "Banner.jpg", "/123/banner.mp4");
-        actualVideo.setBanner(aBannerImage);
+        actualVideo.updateBannerMedia(aBannerImage);
 
         assertEquals(aBannerImage, actualVideo.getBanner().get());
         assertNotEquals(initialVideo.getBanner(), actualVideo.getBanner());
@@ -228,7 +244,7 @@ public class VideoTest {
     }
 
     @Test
-    void givenAValidThumbnail_whenCallsSetThumbnail_shouldUpdateIt() {
+    void givenAValidThumbnail_whenCallsUpdateThumbnail_Media_shouldUpdateIt() {
         final var expectedTitle = "Some title";
         final var expectedDescription = "a".repeat(4000);
         final var expectedLaunchedAt = Year.of(2022);
@@ -256,7 +272,7 @@ public class VideoTest {
 
         final var aThumbnailImage = ImageMedia
                 .with("abc", "Thumbnail.jpg", "/123/thumbnail.mp4");
-        actualVideo.setThumbnail(aThumbnailImage);
+        actualVideo.updateThumbnailMedia(aThumbnailImage);
 
         assertEquals(aThumbnailImage, actualVideo.getThumbnail().get());
         assertNotEquals(initialVideo.getThumbnail(), actualVideo.getThumbnail());
@@ -264,7 +280,7 @@ public class VideoTest {
     }
 
     @Test
-    void givenAValidThumbnailHalf_whenCallsSetThumbnailHalf_shouldUpdateIt() {
+    void givenAValidThumbnailHalf_whenCallsUpdateThumbnailHalf_Media_shouldUpdateIt() {
         final var expectedTitle = "Some title";
         final var expectedDescription = "a".repeat(4000);
         final var expectedLaunchedAt = Year.of(2022);
@@ -292,7 +308,7 @@ public class VideoTest {
 
         final var aThumbnailHalfImage = ImageMedia
                 .with("abc", "Thumbnail.jpg", "/123/thumbnail.mp4");
-        actualVideo.setThumbnailHalf(aThumbnailHalfImage);
+        actualVideo.updateThumbnailHalfMedia(aThumbnailHalfImage);
 
         assertEquals(aThumbnailHalfImage, actualVideo.getThumbnailHalf().get());
         assertNotEquals(initialVideo.getThumbnailHalf(), actualVideo.getThumbnailHalf());
