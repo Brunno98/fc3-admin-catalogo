@@ -3,3 +3,11 @@ mysql:
   password: 123456
   schema: adm_videos
   url: localhost:3306
+
+amqp:
+  host: localhost
+  port: 5672
+  username: adm_videos
+  password: 123456
+  admin:
+    auto-create: true

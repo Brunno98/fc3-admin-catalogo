@@ -9,3 +9,9 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: none
+
+amqp:
+  host: ${AMQP_RABBITMQ_HOST}
+  port: ${AMQP_RABBITMQ_PORT}
+  username: ${AMQP_RABBITMQ_USERNAME}
+  password: ${AMQP_RABBITMQ_PASSWORD}
