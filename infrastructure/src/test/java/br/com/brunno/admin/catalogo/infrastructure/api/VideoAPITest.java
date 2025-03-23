@@ -20,6 +20,7 @@ import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
 import br.com.brunno.admin.catalogo.domain.category.Category;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
+import br.com.brunno.admin.catalogo.domain.exceptions.NotFoundException;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotificationException;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
 import br.com.brunno.admin.catalogo.domain.genre.GenreID;
@@ -156,6 +157,54 @@ class VideoAPITest {
         );
     }
 
+    @Test
+    void givenANotificationException_whenCallsCreateVideoFull_shouldReturnUnprocessableEntity() throws Exception {
+        // given
+        final var expectedErrorMessage = "Some error message";
+
+        final var inputVideo =
+                new MockMultipartFile("video_file", "video.mp4", "video/mp4", "VIDEO".getBytes());
+        final var inputTrailer =
+                new MockMultipartFile("trailer_file", "trailer.mp4", "video/mp4", "TRAILER".getBytes());
+        final var inputBanner =
+                new MockMultipartFile("banner_file", "banner.jpg", "image/jpg", "BANNER".getBytes());
+        final var inputThumbnail =
+                new MockMultipartFile("thumbnail_file", "thumbnail.jpg", "image/jpg", "THUMBNAIL".getBytes());
+        final var inputThumbnailHalf =
+                new MockMultipartFile("thumbnail_half_file", "thumbnail_half.jpg", "image/jpg", "THUMBNAIL_HALF".getBytes());
+
+        when(createVideoUseCase.execute(any()))
+                .thenThrow(NotificationException.with(new Error(expectedErrorMessage)));
+
+        // when
+        final var aRequest = multipart("/videos")
+                .file(inputVideo)
+                .file(inputTrailer)
+                .file(inputBanner)
+                .file(inputThumbnail)
+                .file(inputThumbnailHalf)
+                .param("title", Fixture.title())
+                .param("description", "some description")
+                .param("year_launched", Fixture.year().toString())
+                .param("duration", String.valueOf(Fixture.duration()))
+                .param("opened", String.valueOf(Fixture.bool()))
+                .param("published", String.valueOf(Fixture.bool()))
+                .param("rating", Fixture.Videos.rating().getName())
+                .param("cast_member_id", CastMemberID.unique().getValue())
+                .param("categories_id", CategoryId.unique().getValue())
+                .param("genres_id", GenreID.unique().getValue())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.MULTIPART_FORM_DATA);
+
+        final var resultActions = mockMvc.perform(aRequest)
+                .andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+                status().isUnprocessableEntity(),
+                jsonPath("$.message", equalTo(expectedErrorMessage))
+        );
+    }
 
     @Test
     void givenAValidCommand_whenCallsCreatePartial_shouldReturnId() throws Exception {
@@ -207,6 +256,43 @@ class VideoAPITest {
                 header().string("Location", "/videos/" + expectedVideoId.getValue()),
                 header().string("content-type", MediaType.APPLICATION_JSON_VALUE),
                 jsonPath("$.id", equalTo(expectedVideoId.getValue()))
+        );
+    }
+
+    @Test
+    void givenANotificationException_whenCallsCreateVideoPartial_shouldReturnUnprocessableEntity() throws Exception {
+        // given
+        final var expectedErrorMessage = "Some error message";
+
+        final var requestBody = new CreateVideoRequest(
+                Fixture.title(),
+                "some description",
+                Fixture.year(),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                Fixture.Videos.rating().getName(),
+                Set.of(CastMemberID.unique().getValue()),
+                Set.of(CategoryId.unique().getValue()),
+                Set.of(GenreID.unique().getValue())
+        );
+
+        when(createVideoUseCase.execute(any()))
+                .thenThrow(NotificationException.with(new Error(expectedErrorMessage)));
+
+        // when
+        final var aRequest = post("/videos")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(requestBody));
+
+        final var resultActions = mockMvc.perform(aRequest)
+                .andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+                status().isUnprocessableEntity(),
+                jsonPath("$.message", equalTo(expectedErrorMessage))
         );
     }
 
@@ -304,6 +390,29 @@ class VideoAPITest {
                 jsonPath("$.genres_id", equalTo(expectedGenres)),
                 jsonPath("$.cast_members_id", equalTo(expectedCastMembers))
 
+        );
+    }
+
+    @Test
+    void givenANotFoundException_whenCallsGetById_shouldReturnNotFound() throws Exception {
+        //given
+        final var inputId = "nonExistentId";
+        final var expectedErrorMessage = "Video with ID 'nonExistentId' not found";
+
+        when(getVideoUseCase.execute(any()))
+                .thenThrow(NotFoundException.with(Video.class, VideoID.from(inputId)));
+
+        // when
+        final var aRequest = get("/videos/{id}", inputId)
+                .accept(MediaType.APPLICATION_JSON);
+
+        final var resultActions = mockMvc.perform(aRequest)
+                .andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+                status().isNotFound(),
+                jsonPath("$.message", equalTo(expectedErrorMessage))
         );
     }
 
