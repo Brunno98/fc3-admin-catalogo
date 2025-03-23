@@ -124,4 +124,34 @@ public interface VideoAPI {
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(@PathVariable(name = "id") String id);
+
+
+    @GetMapping("/{id}/medias/{type}")
+    @Operation(summary = "Get a video media by it's type")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Media Retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Media was not found"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
+    })
+    ResponseEntity<byte[]> getMediaByType(
+            @PathVariable(name = "id") String videoId,
+            @PathVariable(name = "type") String mediaType
+    );
+
+    @PostMapping(
+            value = "/{id}/medias/{type}",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Upload a video media by it's type")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Media created successfully"),
+            @ApiResponse(responseCode = "404", description = "Video was not found"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
+    })
+    ResponseEntity<?> uploadMediaByType(
+            @PathVariable(name = "id") String videoId,
+            @PathVariable(name = "type") String mediaType,
+            @RequestParam(name = "media_file") MultipartFile media
+    );
 }
