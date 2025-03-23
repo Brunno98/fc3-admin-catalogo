@@ -1,6 +1,8 @@
 package br.com.brunno.admin.catalogo.domain;
 
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
+import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
+import br.com.brunno.admin.catalogo.domain.video.ImageMedia;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
 import br.com.brunno.admin.catalogo.domain.resource.Resource;
 import br.com.brunno.admin.catalogo.domain.video.VideoMediaType;
@@ -13,7 +15,8 @@ import static io.vavr.API.List;
 
 public final class Fixture {
 
-    private Fixture() {}
+    private Fixture() {
+    }
 
     private static final Faker FAKER = new Faker();
 
@@ -36,7 +39,11 @@ public final class Fixture {
         return FAKER.bool().bool();
     }
 
-    public static String title () {
+    public static String checksum() {
+        return "03fe62de";
+    }
+
+    public static String title() {
         return FAKER.options()
                 .option(
                         "Sombras do Amanhã",
@@ -52,10 +59,11 @@ public final class Fixture {
             return FAKER.options().option(CastMemberType.values());
         }
     }
+
     public static final class Videos {
         public static String description() {
             return FAKER.options().option(
-                            """
+                    """
                             Um grupo de desconhecidos se vê preso em um lugar isolado após um evento inesperado mudar
                             suas vidas para sempre. Forçados a confiar uns nos outros, eles precisam enfrentar desafios
                             mortais, resolver mistérios e descobrir a verdade por trás do que os levou até ali antes que
@@ -97,6 +105,24 @@ public final class Fixture {
             final byte[] content = "Conteudo".getBytes();
 
             return Resource.with(checksum, content, contentType, type.name().toLowerCase());
+        }
+
+        public static AudioVideoMedia audioVideo(final VideoMediaType type) {
+            final var checksum = Fixture.checksum();
+            return AudioVideoMedia.with(
+                    checksum,
+                    type.name().toLowerCase(),
+                    "/videos/" + checksum
+            );
+        }
+
+        public static ImageMedia image(final VideoMediaType type) {
+            final var checksum = Fixture.checksum();
+            return ImageMedia.with(
+                    checksum,
+                    type.name().toLowerCase(),
+                    "/images/" + checksum
+            );
         }
     }
 }

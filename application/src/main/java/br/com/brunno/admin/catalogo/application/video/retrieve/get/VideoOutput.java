@@ -7,6 +7,7 @@ import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
 import br.com.brunno.admin.catalogo.domain.video.ImageMedia;
 import br.com.brunno.admin.catalogo.domain.video.Video;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ public record VideoOutput(
         Boolean opened,
         Boolean published,
         String rating,
+        Instant createdAt,
+        Instant updatedAt,
         Set<String> categories,
         Set<String> genres,
         Set<String> members,
@@ -40,6 +43,8 @@ public record VideoOutput(
                 aVideo.isOpened(),
                 aVideo.isPublished(),
                 aVideo.getRating().getName(),
+                aVideo.getCreatedAt(),
+                aVideo.getUpdatedAt(),
                 aVideo.getCategories().stream().map(CategoryId::getValue).collect(Collectors.toSet()),
                 aVideo.getGenres().stream().map(GenreID::getValue).collect(Collectors.toSet()),
                 aVideo.getCastMembers().stream().map(CastMemberID::getValue).collect(Collectors.toSet()),
