@@ -3,8 +3,11 @@ package br.com.brunno.admin.catalogo.infrastructure.api;
 import br.com.brunno.admin.catalogo.ControllerTest;
 import br.com.brunno.admin.catalogo.application.video.create.CreateVideoOutput;
 import br.com.brunno.admin.catalogo.application.video.create.CreateVideoUseCase;
+import br.com.brunno.admin.catalogo.application.video.delete.DeleteVideoUseCase;
 import br.com.brunno.admin.catalogo.application.video.retrieve.get.GetVideoUseCase;
 import br.com.brunno.admin.catalogo.application.video.retrieve.get.VideoOutput;
+import br.com.brunno.admin.catalogo.application.video.retrieve.list.VideoListOutput;
+import br.com.brunno.admin.catalogo.application.video.retrieve.list.VideoListUseCase;
 import br.com.brunno.admin.catalogo.application.video.update.UpdateVideoOutput;
 import br.com.brunno.admin.catalogo.application.video.update.UpdateVideoUseCase;
 import br.com.brunno.admin.catalogo.domain.Fixture;
@@ -16,11 +19,13 @@ import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotificationException;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
 import br.com.brunno.admin.catalogo.domain.genre.GenreID;
+import br.com.brunno.admin.catalogo.domain.pagination.Pagination;
 import br.com.brunno.admin.catalogo.domain.validation.Error;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
 import br.com.brunno.admin.catalogo.domain.video.Video;
 import br.com.brunno.admin.catalogo.domain.video.VideoID;
 import br.com.brunno.admin.catalogo.domain.video.VideoMediaType;
+import br.com.brunno.admin.catalogo.domain.video.VideoPreview;
 import br.com.brunno.admin.catalogo.infrastructure.api.controllers.VideoController;
 import br.com.brunno.admin.catalogo.infrastructure.video.models.CreateVideoRequest;
 import br.com.brunno.admin.catalogo.infrastructure.video.models.UpdateVideoRequest;
@@ -32,6 +37,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.Year;
 import java.util.List;
@@ -40,8 +46,11 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -69,6 +78,12 @@ class VideoAPITest {
     @MockBean
     UpdateVideoUseCase updateVideoUseCase;
 
+    @MockBean
+    DeleteVideoUseCase deleteVideoUseCase;
+
+    @MockBean
+    VideoListUseCase videoListUseCase;
+
     @Test
     void givenAValidCommand_whenCallsCreateFull_shouldReturnAnId() throws Exception {
         // given
@@ -95,7 +110,7 @@ class VideoAPITest {
         final var expectedThumbnailHalf =
                 new MockMultipartFile("thumbnail_half_file", "thumbnail_half.jpg", "image/jpg", "THUMBNAIL_HALF".getBytes());
         doReturn(new CreateVideoOutput(expectedVideoId))
-                .when(createVideoUseCase).execute(Mockito.any());
+                .when(createVideoUseCase).execute(any());
 
         // when
         final var aRequest = multipart("/videos")
@@ -163,7 +178,7 @@ class VideoAPITest {
         );
 
         doReturn(new CreateVideoOutput(expectedVideoId))
-                .when(createVideoUseCase).execute(Mockito.any());
+                .when(createVideoUseCase).execute(any());
 
         // when
         final var aRequest = post("/videos")
@@ -313,7 +328,7 @@ class VideoAPITest {
         );
 
         doReturn(new UpdateVideoOutput(expectedVideoId))
-                .when(updateVideoUseCase).execute(Mockito.any());
+                .when(updateVideoUseCase).execute(any());
 
         // when
         final var aRequest = put("/videos/{id}", expectedVideoId.getValue())
@@ -353,7 +368,7 @@ class VideoAPITest {
         );
 
         doThrow(NotificationException.with(new Error(expectedErrorMessage)))
-                .when(updateVideoUseCase).execute(Mockito.any());
+                .when(updateVideoUseCase).execute(any());
 
         // when
         final var aRequest = put("/videos/{id}", VideoID.unique().getValue())
@@ -373,16 +388,103 @@ class VideoAPITest {
                 jsonPath("$.errors[0].message", equalTo(expectedErrorMessage))
         );
     }
+
+    @Test
+    void givenAValidId_whenCallsDelete_shouldReturnNoContent() throws Exception {
+        // given
+        final var expectedId = VideoID.unique().toString();
+
+        // when
+        final var aRequest = delete("/videos/{id}", expectedId);
+        final var resultActions = this.mockMvc.perform(aRequest).andDo(print());
+
+        // then
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    @Test
+    void givenValidParams_whenCallsListVideos_shouldReturnPagination() throws Exception {
+        // given
+        final var aVideo = new VideoPreview(Fixture.video());
+        final var expectedPage = 0;
+        final var expectePerPage = 10;
+        final var expectedItemsCount = 1;
+        final var expectedTotal = 1;
+        final var expectedItems = List.of(VideoListOutput.from(aVideo));
+        final var inputTerms = "foo";
+        final var inputSort = "name";
+        final var inputDirection = "asc";
+        final var inputCastMembers = "cast1";
+        final var inputCategories = "cat1";
+        final var inputGenres = "genre1";
+
+        when(videoListUseCase.execute(any()))
+                .thenReturn(new Pagination<>(expectedPage, expectePerPage, expectedTotal, expectedItems));
+
+        // when
+        final var aRequest = get("/videos")
+                .accept(MediaType.APPLICATION_JSON)
+                .queryParam("page", String.valueOf(expectedPage))
+                .queryParam("perPage", String.valueOf(expectePerPage))
+                .queryParam("sort", inputSort)
+                .queryParam("dir", inputDirection)
+                .queryParam("search", inputTerms)
+                .queryParam("cast_members_ids", inputCastMembers)
+                .queryParam("genres_ids", inputGenres)
+                .queryParam("categories_ids", inputCategories);
+        final var resultActions = this.mockMvc.perform(aRequest);
+
+        // then
+        resultActions.andExpectAll(
+                status().isOk(),
+                jsonPath("$.current_page", equalTo(expectedPage)),
+                jsonPath("$.per_page", equalTo(expectePerPage)),
+                jsonPath("$.total", equalTo(expectedTotal)),
+                jsonPath("$.items", hasSize(expectedItemsCount)),
+                jsonPath("$.items[0].id", equalTo(aVideo.id())),
+                jsonPath("$.items[0].title", equalTo(aVideo.title())),
+                jsonPath("$.items[0].description", equalTo(aVideo.description())),
+                jsonPath("$.items[0].created_at", equalTo(aVideo.createdAt().toString())),
+                jsonPath("$.items[0].updated_at", equalTo(aVideo.updatedAt().toString()))
+        );
+    }
+
+    @Test
+    void givenEmptyParams_whenCallsListVideos_shouldReturnPagination() throws Exception {
+        // given
+        final var aVideo = new VideoPreview(Fixture.video());
+        final var expectedPage = 0;
+        final var expectePerPage = 25;
+        final var expectedItemsCount = 1;
+        final var expectedTotal = 1;
+        final var expectedItems = List.of(VideoListOutput.from(aVideo));
+//        final var inputTerms = "";
+//        final var inputSort = "name";
+//        final var inputDirection = "asc";
+//        final var inputCastMembers = "cast1";
+//        final var inputCategories = "cat1";
+//        final var inputGenres = "genre1";
+
+        when(videoListUseCase.execute(any()))
+                .thenReturn(new Pagination<>(expectedPage, expectePerPage, expectedTotal, expectedItems));
+
+        // when
+        final var aRequest = get("/videos")
+                .accept(MediaType.APPLICATION_JSON);
+        final var resultActions = this.mockMvc.perform(aRequest);
+
+        // then
+        resultActions.andExpectAll(
+                status().isOk(),
+                jsonPath("$.current_page", equalTo(expectedPage)),
+                jsonPath("$.per_page", equalTo(expectePerPage)),
+                jsonPath("$.total", equalTo(expectedTotal)),
+                jsonPath("$.items", hasSize(expectedItemsCount)),
+                jsonPath("$.items[0].id", equalTo(aVideo.id())),
+                jsonPath("$.items[0].title", equalTo(aVideo.title())),
+                jsonPath("$.items[0].description", equalTo(aVideo.description())),
+                jsonPath("$.items[0].created_at", equalTo(aVideo.createdAt().toString())),
+                jsonPath("$.items[0].updated_at", equalTo(aVideo.updatedAt().toString()))
+                );
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-

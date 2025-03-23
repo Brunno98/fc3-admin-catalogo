@@ -5,9 +5,13 @@ import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
 import br.com.brunno.admin.catalogo.domain.video.ImageMedia;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
 import br.com.brunno.admin.catalogo.domain.resource.Resource;
+import br.com.brunno.admin.catalogo.domain.video.Video;
 import br.com.brunno.admin.catalogo.domain.video.VideoMediaType;
 import com.github.javafaker.Faker;
 import io.vavr.API;
+
+import java.time.Year;
+import java.util.Set;
 
 import static io.vavr.API.$;
 import static io.vavr.API.Case;
@@ -52,6 +56,21 @@ public final class Fixture {
                         "Ruínas do Destino",
                         "A Máquina do Infinito"
                 );
+    }
+
+    public static Video video() {
+        return Video.newVideo(
+                Fixture.title(),
+                Fixture.Videos.description(),
+                Year.of(Fixture.year()),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                Fixture.Videos.rating(),
+                Set.of(),
+                Set.of(),
+                Set.of()
+        );
     }
 
     public static final class CastMembers {
