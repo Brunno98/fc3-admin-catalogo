@@ -51,7 +51,7 @@ public class DefaultMediaResourceGateway implements MediaResourceGateway {
 
     @Override
     public Optional<Resource> getResource(VideoID anId, VideoMediaType aType) {
-        return this.storageService.get(filename(aType));
+        return this.storageService.get(filepath(aType, anId));
     }
 
     private String filename(final VideoMediaType type) {
