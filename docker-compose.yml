@@ -1,4 +1,16 @@
 services:
+  app:
+    container_name: adm_videos_app
+    build: .
+    profiles:
+      - app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    networks:
+      - adm_videos_network
+
   mysql:
     container_name: adm_videos_mysql
     image: mysql:8.0
