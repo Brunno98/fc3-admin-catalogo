@@ -8,7 +8,7 @@ buildscript {
 }
 
 plugins {
-    id 'java'
+    id 'java-conventions'
     id 'application'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -22,10 +22,6 @@ bootJar {
 
 group = 'br.com.brunno.admin.catalogo.infrastructure'
 version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     implementation(project(":domain"))
@@ -56,8 +52,4 @@ flyway {
     url = System.getenv("FLAYWAY_DB") ?: 'jdbc:mysql://localhost:3306/adm_videos'
     user = System.getenv("FLAYWAY_USER") ?: 'root'
     password = System.getenv("FLAYWAY_PASS") ?: '123456'
-}
-
-test {
-    useJUnitPlatform()
 }
