@@ -12,9 +12,9 @@ repositories {
 dependencies {
     implementation 'io.vavr:vavr:0.10.6'
 
-    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation platform('org.junit:junit-bom:5.11.4') // precisa de ajustes para subir para a versão mais recente
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.mockito:mockito-junit-jupiter:4.5.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.11.0'
 }
 
 jacoco {

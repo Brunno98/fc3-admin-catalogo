@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.flywaydb:flyway-mysql:8.5.10'
+        classpath 'org.flywaydb:flyway-mysql:11.4.0'
     }
 }
 
@@ -13,7 +13,7 @@ plugins {
     id 'application'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.flywaydb.flyway' version '8.5.10'
+    id 'org.flywaydb.flyway' version '11.4.0'
 }
 
 bootJar {
@@ -34,18 +34,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.6.8'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.8'
-    implementation 'io.vavr:vavr:0.10.6'
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.8.0'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.8.0'
+    implementation 'com.google.guava:guava:33.4.5-jre'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test:2.4.4'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test:2.4.17' // precisa de ajustes para subir para a versão mais recente (3.2.4)
     testImplementation('org.flywaydb:flyway-core')
     testRuntimeOnly 'com.h2database:h2'
-    testImplementation 'org.testcontainers:testcontainers:1.17.2'
-    testImplementation 'org.testcontainers:mysql:1.17.2'
-    testImplementation 'org.testcontainers:junit-jupiter:1.17.2'
+    testImplementation 'org.testcontainers:testcontainers:1.20.6'
+    testImplementation 'org.testcontainers:mysql:1.20.6'
+    testImplementation 'org.testcontainers:junit-jupiter:1.20.6'
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
 }
 
