@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.domain.category;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.exceptions.DomainException;
 import br.com.brunno.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@UnitTest
 class CategoryTest {
 
     @Test

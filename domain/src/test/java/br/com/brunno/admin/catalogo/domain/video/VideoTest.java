@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.domain.video;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.genre.GenreID;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@UnitTest
 public class VideoTest {
 
     @Test
@@ -163,7 +165,7 @@ public class VideoTest {
         assertNotEquals(initialVideo.getVideo(), actualVideo.getVideo());
         assertTrue(initialVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
         assertEquals(1, actualVideo.getDomainEvents().size());
-        assertEquals(expectedEvent, actualVideo.getDomainEvents().get(0));
+        assertEquals(expectedEvent, actualVideo.getDomainEvents().get(0)); //TODO: essa asserção esta tornando o teste Flaky
     }
 
     @Test

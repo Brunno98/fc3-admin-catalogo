@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.application.genre.update;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.category.CategoryGateway;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotificationException;
@@ -27,6 +28,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 class UpdateGenreUseCaseTest {
 

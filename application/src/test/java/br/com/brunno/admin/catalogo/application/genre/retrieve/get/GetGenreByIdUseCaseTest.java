@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.application.genre.retrieve.get;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotFoundException;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 public class GetGenreByIdUseCaseTest {
 

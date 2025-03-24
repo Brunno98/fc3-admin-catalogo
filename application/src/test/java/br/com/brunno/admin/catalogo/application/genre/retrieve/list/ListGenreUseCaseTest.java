@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.application.genre.retrieve.list;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.genre.Genre;
 import br.com.brunno.admin.catalogo.domain.genre.GenreGateway;
 import br.com.brunno.admin.catalogo.domain.pagination.Pagination;
@@ -18,6 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 public class ListGenreUseCaseTest {
 

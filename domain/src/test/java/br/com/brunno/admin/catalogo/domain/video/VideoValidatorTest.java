@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.domain.video;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.exceptions.DomainException;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@UnitTest
 public class VideoValidatorTest {
 
     @Test

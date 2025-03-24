@@ -1,6 +1,7 @@
 package br.com.brunno.admin.catalogo.application.castmember.update;
 
 import br.com.brunno.admin.catalogo.domain.Fixture;
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
@@ -19,9 +20,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 public class UpdateCastMemberUseCaseTest {
 

@@ -1,10 +1,10 @@
 package br.com.brunno.admin.catalogo.infrastructure.services.local;
 
 import br.com.brunno.admin.catalogo.domain.Fixture;
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.video.VideoMediaType;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@UnitTest
 class InMemoryStorageServiceTest {
 
     private InMemoryStorageService storeService = new InMemoryStorageService();

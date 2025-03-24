@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.application.castmember.delete;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.argThat;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 public class DeleteCastMemberUseCaseTest {
 

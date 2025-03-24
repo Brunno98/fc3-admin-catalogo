@@ -1,6 +1,7 @@
 package br.com.brunno.admin.catalogo.application.castmember.create;
 
 import br.com.brunno.admin.catalogo.domain.Fixture;
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberType;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotificationException;
@@ -20,6 +21,7 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 public class CreateCastMemberUseCaseTest {
 

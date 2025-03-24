@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,4 +25,5 @@ import java.lang.annotation.Target;
         }
 )
 @ExtendWith(CleanupMySQLExtension.class)
+@Tag("integrationTest")
 public @interface MySQLGatewayTest {}

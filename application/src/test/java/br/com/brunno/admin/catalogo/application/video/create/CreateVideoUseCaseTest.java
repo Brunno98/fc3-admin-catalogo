@@ -2,6 +2,7 @@ package br.com.brunno.admin.catalogo.application.video.create;
 
 import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.domain.Identifier;
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
 import br.com.brunno.admin.catalogo.domain.category.CategoryGateway;
@@ -9,11 +10,11 @@ import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.exceptions.InternalErroException;
 import br.com.brunno.admin.catalogo.domain.genre.GenreGateway;
 import br.com.brunno.admin.catalogo.domain.genre.GenreID;
+import br.com.brunno.admin.catalogo.domain.resource.Resource;
 import br.com.brunno.admin.catalogo.domain.video.AudioVideoMedia;
 import br.com.brunno.admin.catalogo.domain.video.ImageMedia;
 import br.com.brunno.admin.catalogo.domain.video.MediaResourceGateway;
 import br.com.brunno.admin.catalogo.domain.video.Rating;
-import br.com.brunno.admin.catalogo.domain.resource.Resource;
 import br.com.brunno.admin.catalogo.domain.video.VideoGateway;
 import br.com.brunno.admin.catalogo.domain.video.VideoMediaType;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 public class CreateVideoUseCaseTest {
 

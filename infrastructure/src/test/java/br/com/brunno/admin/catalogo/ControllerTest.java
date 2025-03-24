@@ -1,10 +1,9 @@
 package br.com.brunno.admin.catalogo;
 
 import br.com.brunno.admin.catalogo.infrastructure.configuration.ObjectMapperConfig;
+import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,6 +21,7 @@ import java.lang.annotation.Target;
 @WebMvcTest
 @AutoConfigureMockMvc
 @Import(ObjectMapperConfig.class)
+@Tag("integrationTest")
 public @interface ControllerTest {
 
     @AliasFor(annotation = WebMvcTest.class, attribute = "controllers")

@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.application.genre.create;
 
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.category.CategoryGateway;
 import br.com.brunno.admin.catalogo.domain.category.CategoryId;
 import br.com.brunno.admin.catalogo.domain.exceptions.NotificationException;
@@ -21,6 +22,7 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 class CreateGenreUseCaseTest {
 

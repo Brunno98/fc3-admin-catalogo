@@ -1,6 +1,7 @@
 package br.com.brunno.admin.catalogo.application.castmember.retrieve.list;
 
 import br.com.brunno.admin.catalogo.domain.Fixture;
+import br.com.brunno.admin.catalogo.domain.UnitTest;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberGateway;
 import br.com.brunno.admin.catalogo.domain.pagination.Pagination;
@@ -19,6 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
+@UnitTest
 @ExtendWith(MockitoExtension.class)
 public class ListCastMemberUseCaseTest {
 
