@@ -32,7 +32,7 @@ public class DefaultVideoGateway implements VideoGateway {
 
     public DefaultVideoGateway(
             VideoRepository videoRepository,
-            @VideoCreatedQualifier EventService eventService
+            EventService eventService
     ) {
         this.videoRepository = Objects.requireNonNull(videoRepository);
         this.eventService = Objects.requireNonNull(eventService);
