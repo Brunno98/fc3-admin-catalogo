@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.api;
 
+import br.com.brunno.admin.catalogo.ApiTest;
 import br.com.brunno.admin.catalogo.ControllerTest;
 import br.com.brunno.admin.catalogo.application.genre.create.CreateGenreOutput;
 import br.com.brunno.admin.catalogo.application.genre.create.CreateGenreUseCase;
@@ -91,12 +92,14 @@ public class GenreAPITest {
                 .when(createGenreUseCase).execute(any());
 
         final var result = mockMvc.perform(post("/genres")
+                        .with(ApiTest.GENRES_JWT)
+                        .with(ApiTest.GENRES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(createCommand)))
                 .andDo(print());
 
         result.andExpect(status().isCreated());
-        result.andExpect(header().string("Location", "/genres/"+expectedId));
+        result.andExpect(header().string("Location", "/genres/" + expectedId));
         result.andExpect(jsonPath("$.id").value(expectedId));
     }
 
@@ -111,6 +114,7 @@ public class GenreAPITest {
                 .thenThrow(new NotificationException("Error", Notification.create(new Error("Unknown error"))));
 
         final var result = mockMvc.perform(post("/genres")
+                        .with(ApiTest.GENRES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(createCommand)))
                 .andDo(print());
@@ -121,7 +125,7 @@ public class GenreAPITest {
     }
 
     @Test
-    void givenAValidGenreId_whenFindGenreById_shouldReturnTheGenre() throws Exception{
+    void givenAValidGenreId_whenFindGenreById_shouldReturnTheGenre() throws Exception {
 
         final var expectedName = "Ação";
         final var expectedIsActive = false;
@@ -135,7 +139,8 @@ public class GenreAPITest {
 
         doReturn(GenreOutput.from(aGenre)).when(getGenreByIdUseCase).execute(any());
 
-        final var resultActions = mockMvc.perform(get("/genres/{id}", expectedId))
+        final var resultActions = mockMvc.perform(get("/genres/{id}", expectedId)
+                        .with(ApiTest.GENRES_JWT))
                 .andDo(print());
 
         resultActions.andExpect(status().isOk());
@@ -155,7 +160,8 @@ public class GenreAPITest {
         Mockito.doThrow(NotFoundException.with(Genre.class, aGenreId))
                 .when(getGenreByIdUseCase).execute(aGenreId);
 
-        final var resultActions = mockMvc.perform(get("/genres/{id}", aGenreId.getValue()))
+        final var resultActions = mockMvc.perform(get("/genres/{id}", aGenreId.getValue())
+                        .with(ApiTest.GENRES_JWT))
                 .andDo(print());
 
         resultActions.andExpect(status().isNotFound());
@@ -171,6 +177,7 @@ public class GenreAPITest {
                 .when(updateGenreUseCase).execute(any());
 
         final var result = mockMvc.perform(put("/genres/{id}", aGenreId)
+                        .with(ApiTest.GENRES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(createCommand)))
                 .andDo(print());
@@ -190,6 +197,7 @@ public class GenreAPITest {
                 .thenThrow(new NotificationException("Error", Notification.create(new Error(expectedErrorMessage))));
 
         final var result = mockMvc.perform(put("/genres/{id}", aGenreId)
+                        .with(ApiTest.GENRES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(updateCommand)))
                 .andDo(print());
@@ -206,7 +214,8 @@ public class GenreAPITest {
 
         doNothing().when(deleteGenreUseCase).execute(any());
 
-        final var resultActions = mockMvc.perform(delete("/genres/{id}", aGenreId))
+        final var resultActions = mockMvc.perform(delete("/genres/{id}", aGenreId)
+                        .with(ApiTest.GENRES_JWT))
                 .andDo(print());
 
         resultActions.andExpect(status().isNoContent());
@@ -237,6 +246,7 @@ public class GenreAPITest {
                 ));
 
         final var result = mockMvc.perform(get("/genres")
+                .with(ApiTest.GENRES_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)

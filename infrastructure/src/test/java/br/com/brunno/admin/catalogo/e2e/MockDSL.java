@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.e2e;
 
+import br.com.brunno.admin.catalogo.ApiTest;
 import br.com.brunno.admin.catalogo.domain.Identifier;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMember;
 import br.com.brunno.admin.catalogo.domain.castmember.CastMemberID;
@@ -116,6 +117,7 @@ public interface MockDSL {
     private String given(String url, Object body) {
         try {
             return this.mvc().perform(post(url)
+                            .with(ApiTest.ADMIN_JWT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(this.mapper().writeValueAsString(body)))
                     .andExpect(status().isCreated())
@@ -132,6 +134,7 @@ public interface MockDSL {
     private <T> T retrieve(String url, Class<T> clazz) {
         try {
             var content = this.mvc().perform(get(url)
+                            .with(ApiTest.ADMIN_JWT)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andReturn()
@@ -147,6 +150,7 @@ public interface MockDSL {
     private void update(String url, Object requestBody) {
         try {
             this.mvc().perform(MockMvcRequestBuilders.put(url)
+                            .with(ApiTest.ADMIN_JWT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(this.mapper().writeValueAsString(requestBody)))
                     .andExpect(status().isOk());
@@ -158,6 +162,7 @@ public interface MockDSL {
     private void delete(String url) {
         try {
             this.mvc().perform(MockMvcRequestBuilders.delete(url)
+                            .with(ApiTest.ADMIN_JWT)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNoContent());
         } catch (Exception e) {
@@ -168,6 +173,7 @@ public interface MockDSL {
     private ResultActions list(String url, String page, String perPage, String sort, String direction, String terms) {
         try {
             return this.mvc().perform(get(url)
+                    .with(ApiTest.ADMIN_JWT)
                     .queryParam("page", page)
                     .queryParam("perPage", perPage)
                     .queryParam("sort", sort)

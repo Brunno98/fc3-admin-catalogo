@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.api;
 
+import br.com.brunno.admin.catalogo.ApiTest;
 import br.com.brunno.admin.catalogo.ControllerTest;
 import br.com.brunno.admin.catalogo.application.category.create.CreateCategoryOutput;
 import br.com.brunno.admin.catalogo.application.category.create.CreateCategoryUseCase;
@@ -33,6 +34,7 @@ import java.util.stream.Stream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -64,7 +66,7 @@ public class CategoryAPITest {
     public DeleteCategoryUseCase deleteCategoryUseCase;
 
     @Test
-    void givenAValidInput_whenCreateANewCategory_shouldReturnCreatedStatusAndTheCategoryId () throws Exception {
+    void givenAValidInput_whenCreateANewCategory_shouldReturnCreatedStatusAndTheCategoryId() throws Exception {
         final var expectedName = "Filmes";
         final var expectedDescription = "Categoria de filmes";
         final var expectedIsActive = true;
@@ -74,9 +76,11 @@ public class CategoryAPITest {
 
         final var input = CreateCategoryAPIRequest.from(expectedName, expectedDescription, expectedIsActive);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/categories")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(input)))
+        mockMvc.perform(post("/categories")
+                        .with(ApiTest.CATEGORIES_JWT)
+                        .with(ApiTest.CATEGORIES_JWT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(input)))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "/categories/123"))
@@ -84,7 +88,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    void givenAnInValidInput_whenCreateANewCategory_shouldReturnUnprocessableEntityAndErrorMessage () throws Exception {
+    void givenAnInValidInput_whenCreateANewCategory_shouldReturnUnprocessableEntityAndErrorMessage() throws Exception {
         final String expectedName = null;
         final var expectedDescription = "Categoria de filmes";
         final var expectedIsActive = true;
@@ -95,7 +99,8 @@ public class CategoryAPITest {
 
         final var input = CreateCategoryAPIRequest.from(expectedName, expectedDescription, expectedIsActive);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/categories")
+        mockMvc.perform(post("/categories")
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(input)))
                 .andDo(print())
@@ -106,7 +111,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    void givenAnInValidInput_whenCreateANewCategoryThrowsDomainException_shouldReturnUnprocessableEntityAndErrorMessage () throws Exception {
+    void givenAnInValidInput_whenCreateANewCategoryThrowsDomainException_shouldReturnUnprocessableEntityAndErrorMessage() throws Exception {
         final String expectedName = null;
         final var expectedDescription = "Categoria de filmes";
         final var expectedIsActive = true;
@@ -117,7 +122,8 @@ public class CategoryAPITest {
 
         final var input = CreateCategoryAPIRequest.from(expectedName, expectedDescription, expectedIsActive);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/categories")
+        mockMvc.perform(post("/categories")
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(input)))
                 .andDo(print())
@@ -138,6 +144,7 @@ public class CategoryAPITest {
                 .when(getCategoryByIdUseCase).execute(Mockito.any());
 
         mockMvc.perform(get("/categories/{id}", aCategory.getId().getValue())
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -153,6 +160,7 @@ public class CategoryAPITest {
                 .when(getCategoryByIdUseCase).execute(CategoryId.from("non-existent-id"));
 
         mockMvc.perform(get("/categories/non-existent-id")
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -169,6 +177,7 @@ public class CategoryAPITest {
         final var input = CreateCategoryAPIRequest.from("Filmes", "Categoria de filmes", true);
 
         mockMvc.perform(put("/categories/{id}", expectedId)
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(input)))
                 .andDo(print())
@@ -190,6 +199,7 @@ public class CategoryAPITest {
         final var input = CreateCategoryAPIRequest.from(expectedName, expectedDescription, expectedIsActive);
 
         mockMvc.perform(put("/categories/{id}", expectedId)
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(input)))
                 .andDo(print())
@@ -199,7 +209,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    void givenAnInvalidInput_whenUpdateCategoryThrowsDomainException_shouldReturnUnprocessableEntityAndErrorMessage () throws Exception {
+    void givenAnInvalidInput_whenUpdateCategoryThrowsDomainException_shouldReturnUnprocessableEntityAndErrorMessage() throws Exception {
         final var expectedId = "123";
         final String expectedName = null;
         final var expectedDescription = "Categoria de filmes";
@@ -212,6 +222,7 @@ public class CategoryAPITest {
         final var input = CreateCategoryAPIRequest.from(expectedName, expectedDescription, expectedIsActive);
 
         mockMvc.perform(put("/categories/{id}", expectedId)
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(input)))
                 .andDo(print())
@@ -221,16 +232,17 @@ public class CategoryAPITest {
     }
 
     @Test
-    void givenANonExistentId_whenUpdateCategory_shouldReturnNotFoundAndErrorMessage () throws Exception {
+    void givenANonExistentId_whenUpdateCategory_shouldReturnNotFoundAndErrorMessage() throws Exception {
         final var categoryId = "123";
         final var expectedErrorMessage = "Category with ID '123' not found";
 
         Mockito.doThrow(NotFoundException.with(Category.class, CategoryId.from(categoryId)))
                 .when(updateCategoryUseCase).execute(Mockito.any());
 
-        final var input = CreateCategoryAPIRequest.from(null,  "Categoria de filmes", true);
+        final var input = CreateCategoryAPIRequest.from(null, "Categoria de filmes", true);
 
         mockMvc.perform(put("/categories/{id}", categoryId)
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(input)))
                 .andDo(print())
@@ -243,6 +255,7 @@ public class CategoryAPITest {
         final var categoryId = "123";
 
         mockMvc.perform(delete("/categories/{id}", categoryId)
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -266,6 +279,7 @@ public class CategoryAPITest {
                 .when(listCategoriesUseCase).execute(Mockito.any());
 
         mockMvc.perform(get("/categories")
+                        .with(ApiTest.CATEGORIES_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())

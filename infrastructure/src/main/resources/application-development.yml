@@ -1,9 +1,3 @@
-mysql:
-  username: root
-  password: 123456
-  schema: adm_videos
-  url: localhost:3306
-
 amqp:
   host: localhost
   port: 5672
@@ -11,3 +5,13 @@ amqp:
   password: 123456
   admin:
     auto-create: true
+
+keycloak:
+  host: localhost:8443
+  realm: fc3_codeflix
+
+mysql:
+  username: root
+  password: 123456
+  schema: adm_videos
+  url: localhost:3306

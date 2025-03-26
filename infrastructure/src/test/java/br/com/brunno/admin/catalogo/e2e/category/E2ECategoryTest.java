@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.e2e.category;
 
+import br.com.brunno.admin.catalogo.ApiTest;
 import br.com.brunno.admin.catalogo.E2ETest;
 import br.com.brunno.admin.catalogo.infrastructure.category.models.CategoryAPIOutput;
 import br.com.brunno.admin.catalogo.infrastructure.category.models.CreateCategoryAPIRequest;
@@ -54,6 +55,7 @@ public class E2ECategoryTest {
         final var input = CreateCategoryAPIRequest.from(expectedName, expectedDescription, expectedIsActive);
 
         final var categoryId = mockMvc.perform(post("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(input)))
                 .andExpect(status().isCreated())
@@ -64,6 +66,7 @@ public class E2ECategoryTest {
                 .replace("/categories/", "");
 
         var contentAsString = mockMvc.perform(get("/categories/{id}", categoryId)
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -82,11 +85,13 @@ public class E2ECategoryTest {
         final var updateCategoryAPIRequest = new UpdateCategoryAPIRequest(expectedUpdatedName, expectedUpdatedDescription, expectedUpdatedIsActive);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/categories/{id}", categoryId)
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(updateCategoryAPIRequest)))
                 .andExpect(status().isOk());
 
         contentAsString = mockMvc.perform(get("/categories/{id}", categoryId)
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -99,10 +104,12 @@ public class E2ECategoryTest {
         Assertions.assertEquals(expectedUpdatedIsActive, categoryAPIOutput.active());
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/categories/{id}", categoryId)
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
         mockMvc.perform(get("/categories/{id}", categoryId)
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -110,6 +117,7 @@ public class E2ECategoryTest {
     @Test
     public void asACatalogAdminIShouldBeAbleToListCategories() throws Exception {
         mockMvc.perform(post("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
                                 CreateCategoryAPIRequest.from("Filme", "F", true)
@@ -118,6 +126,7 @@ public class E2ECategoryTest {
                 .andExpect(header().exists("Location"));
 
         mockMvc.perform(post("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
                                 CreateCategoryAPIRequest.from("Séries", "A", true)
@@ -126,6 +135,7 @@ public class E2ECategoryTest {
                 .andExpect(header().exists("Location"));
 
         mockMvc.perform(post("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(
                                 CreateCategoryAPIRequest.from("Documentarios", "Z", true)
@@ -134,6 +144,7 @@ public class E2ECategoryTest {
                 .andExpect(header().exists("Location"));
 
         mockMvc.perform(get("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .queryParam("page", "0")
                         .queryParam("perPage", "1")
                         .queryParam("sort", "name")
@@ -144,6 +155,7 @@ public class E2ECategoryTest {
                 .andExpect(jsonPath("$.categories[0].name").value("Documentarios"));
 
         mockMvc.perform(get("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .queryParam("page", "2")
                         .queryParam("perPage", "1")
                         .queryParam("sort", "name")
@@ -154,6 +166,7 @@ public class E2ECategoryTest {
                 .andExpect(jsonPath("$.categories[0].name").value("Séries"));
 
         mockMvc.perform(get("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .queryParam("page", "0")
                         .queryParam("perPage", "1")
                         .queryParam("sort", "name")
@@ -164,6 +177,7 @@ public class E2ECategoryTest {
                 .andExpect(jsonPath("$.categories[0].name").value("Séries"));
 
         mockMvc.perform(get("/categories")
+                        .with(ApiTest.ADMIN_JWT)
                         .queryParam("page", "0")
                         .queryParam("perPage", "1")
                         .queryParam("sort", "description")

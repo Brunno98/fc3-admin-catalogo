@@ -4,6 +4,10 @@ mysql:
   schema: adm_videos
   url: ${DATABASE_MYSQL_URL:localhost:3306}
 
+keycloak:
+  host: ${KEYCLOAK_HOST}
+  realm: ${KEYCLOAK_REALM}
+
 spring:
   jpa:
     show-sql: false

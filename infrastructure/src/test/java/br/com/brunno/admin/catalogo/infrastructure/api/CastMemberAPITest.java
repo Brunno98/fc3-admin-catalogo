@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.api;
 
+import br.com.brunno.admin.catalogo.ApiTest;
 import br.com.brunno.admin.catalogo.ControllerTest;
 import br.com.brunno.admin.catalogo.domain.Fixture;
 import br.com.brunno.admin.catalogo.application.castmember.create.CreateCastMemberOutput;
@@ -85,11 +86,12 @@ public class CastMemberAPITest {
                 .when(createCastMemberUseCase).execute(any());
 
         final var response = mockMvc.perform(post("/cast_members")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(createCastMemberRequest)));
 
         response.andExpect(status().isCreated())
-                .andExpect(header().stringValues("Location", "/cast_members/"+expectedId))
+                .andExpect(header().stringValues("Location", "/cast_members/" + expectedId))
                 .andExpect(jsonPath("$.id", equalTo(expectedId)));
     }
 
@@ -102,6 +104,7 @@ public class CastMemberAPITest {
                 .when(createCastMemberUseCase).execute(any());
 
         final var response = mockMvc.perform(post("/cast_members")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(createCastMemberRequest)));
 
@@ -120,8 +123,9 @@ public class CastMemberAPITest {
                 .formatted(inputInvalidType, CastMemberType.getValuesNames());
 
         final var response = mockMvc.perform(post("/cast_members")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString(createCastMemberRequest)))
+                        .with(ApiTest.CAST_MEMBERS_JWT)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(createCastMemberRequest)))
                 .andDo(print());
 
         response.andExpect(status().isUnprocessableEntity())
@@ -132,7 +136,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    void givenAValidId_whenCallsGetById_shouldReturnIt() throws Exception{
+    void givenAValidId_whenCallsGetById_shouldReturnIt() throws Exception {
         final var expectedName = Fixture.name();
         final var expectedType = Fixture.CastMembers.type();
         final var aCastMember = CastMember.create(expectedName, expectedType);
@@ -141,7 +145,8 @@ public class CastMemberAPITest {
         Mockito.doReturn(GetCastMemberOutput.from(aCastMember))
                 .when(getCastMemberUseCase).execute(expectedId);
 
-        final var response = mockMvc.perform(get("/cast_members/{id}", expectedId.getValue()));
+        final var response = mockMvc.perform(get("/cast_members/{id}", expectedId.getValue())
+                .with(ApiTest.CAST_MEMBERS_JWT));
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(expectedId.getValue())))
@@ -152,14 +157,15 @@ public class CastMemberAPITest {
     }
 
     @Test
-    void givenANonExistentId_whenCallsGetById_shouldReturnNotFound() throws Exception{
+    void givenANonExistentId_whenCallsGetById_shouldReturnNotFound() throws Exception {
         final var expectedId = CastMemberID.from("non existent");
         final var expectedMessage = "CastMember with ID 'non existent' not found";
 
         Mockito.doThrow(NotFoundException.with(CastMember.class, expectedId))
                 .when(getCastMemberUseCase).execute(expectedId);
 
-        final var response = mockMvc.perform(get("/cast_members/{id}", expectedId.getValue()));
+        final var response = mockMvc.perform(get("/cast_members/{id}", expectedId.getValue())
+                .with(ApiTest.CAST_MEMBERS_JWT));
 
         response.andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message", equalTo(expectedMessage)));
@@ -174,6 +180,7 @@ public class CastMemberAPITest {
                 .when(updateCastMemberUseCase).execute(any());
 
         final var response = mockMvc.perform(put("/cast_members/{id}", expectedId)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(updateCastMemberRequest)));
 
@@ -190,6 +197,7 @@ public class CastMemberAPITest {
                 .when(updateCastMemberUseCase).execute(any());
 
         final var response = mockMvc.perform(put("/cast_members/{id}", "an id")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(updateCastMemberRequest)));
 
@@ -208,6 +216,7 @@ public class CastMemberAPITest {
                 .formatted(inputInvalidType, CastMemberType.getValuesNames());
 
         final var response = mockMvc.perform(put("/cast_members/{id}", "an id")
+                        .with(ApiTest.CAST_MEMBERS_JWT)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(updateCastMemberRequest)))
                 .andDo(print());
@@ -220,7 +229,7 @@ public class CastMemberAPITest {
     }
 
     @Test
-    void givenANonExistentId_whenCallsUpdate_shouldReturnNotFound() throws Exception{
+    void givenANonExistentId_whenCallsUpdate_shouldReturnNotFound() throws Exception {
         final var expectedId = CastMemberID.from("non existent");
         final var expectedMessage = "CastMember with ID 'non existent' not found";
         final var updateCastMemberRequest = new UpdateCastMemberRequest(Fixture.name(), Fixture.CastMembers.type().name());
@@ -229,6 +238,7 @@ public class CastMemberAPITest {
                 .when(updateCastMemberUseCase).execute(any());
 
         final var response = mockMvc.perform(put("/cast_members/{id}", expectedId.getValue())
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(updateCastMemberRequest)));
 
@@ -240,7 +250,8 @@ public class CastMemberAPITest {
     void givenAValidId_whenCallsDeleteById_shouldReturnsNoContent() throws Exception {
         final var anId = CastMemberID.unique();
 
-        final var result = mockMvc.perform(delete("/cast_members/{id}", anId.getValue()));
+        final var result = mockMvc.perform(delete("/cast_members/{id}", anId.getValue())
+                .with(ApiTest.CAST_MEMBERS_JWT));
 
         result.andExpect(status().isNoContent());
 
@@ -267,6 +278,7 @@ public class CastMemberAPITest {
         )).when(listCastMemberUseCase).execute(any());
 
         final var result = mockMvc.perform(get("/cast_members")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("per_page", String.valueOf(expectedPerPage))
                 .queryParam("search", expectedTerms)

@@ -1,3 +1,8 @@
+keycloak:
+  host: test
+  realm: test
+
+
 spring:
   autoconfigure:
     exclude:

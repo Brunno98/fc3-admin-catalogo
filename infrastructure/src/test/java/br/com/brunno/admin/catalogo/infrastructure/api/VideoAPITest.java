@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.infrastructure.api;
 
+import br.com.brunno.admin.catalogo.ApiTest;
 import br.com.brunno.admin.catalogo.ControllerTest;
 import br.com.brunno.admin.catalogo.application.video.create.CreateVideoOutput;
 import br.com.brunno.admin.catalogo.application.video.create.CreateVideoUseCase;
@@ -36,14 +37,12 @@ import br.com.brunno.admin.catalogo.infrastructure.video.models.CreateVideoReque
 import br.com.brunno.admin.catalogo.infrastructure.video.models.UpdateVideoRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.Year;
 import java.util.List;
@@ -132,6 +131,7 @@ class VideoAPITest {
                 .file(expectedBanner)
                 .file(expectedThumbnail)
                 .file(expectedThumbnailHalf)
+                .with(ApiTest.VIDEOS_JWT)
                 .param("title", expectedTitle)
                 .param("description", expectedDescription)
                 .param("year_launched", expectedLaunchYear.toString())
@@ -183,6 +183,7 @@ class VideoAPITest {
                 .file(inputBanner)
                 .file(inputThumbnail)
                 .file(inputThumbnailHalf)
+                .with(ApiTest.VIDEOS_JWT)
                 .param("title", Fixture.title())
                 .param("description", "some description")
                 .param("year_launched", Fixture.year().toString())
@@ -243,6 +244,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = post("/videos")
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
@@ -282,6 +284,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = post("/videos")
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
@@ -338,6 +341,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos/{id}", expectedId.getValue())
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var resultActions = mockMvc.perform(aRequest)
@@ -404,6 +408,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos/{id}", inputId)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var resultActions = mockMvc.perform(aRequest)
@@ -453,6 +458,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = put("/videos/{id}", expectedVideoId.getValue())
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
@@ -493,6 +499,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = put("/videos/{id}", VideoID.unique().getValue())
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
@@ -516,7 +523,9 @@ class VideoAPITest {
         final var expectedId = VideoID.unique().toString();
 
         // when
-        final var aRequest = delete("/videos/{id}", expectedId);
+        final var aRequest = delete("/videos/{id}", expectedId)
+                .with(ApiTest.VIDEOS_JWT);
+
         final var resultActions = this.mockMvc.perform(aRequest).andDo(print());
 
         // then
@@ -544,6 +553,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos")
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectePerPage))
@@ -585,6 +595,7 @@ class VideoAPITest {
 
         // when
         final var aRequest = get("/videos")
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON);
         final var resultActions = this.mockMvc.perform(aRequest);
 
@@ -620,7 +631,8 @@ class VideoAPITest {
                 .thenReturn(expectedMedia);
 
         // when
-        final var aRequest = get("/videos/{id}/medias/{type}", expectedId.getValue(), expectedMediaType.name());
+        final var aRequest = get("/videos/{id}/medias/{type}", expectedId.getValue(), expectedMediaType.name())
+                .with(ApiTest.VIDEOS_JWT);
         final var response = mockMvc.perform(aRequest);
 
         // then
@@ -653,6 +665,7 @@ class VideoAPITest {
         // when
         final var aRequest = multipart("/videos/{id}/medias/{type}", expectedVideoId.getValue(), expectedType.name())
                 .file(expectedVideo)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
         final var response = this.mockMvc.perform(aRequest).andDo(print());
@@ -685,6 +698,7 @@ class VideoAPITest {
         // when
         final var aRequest = multipart("/videos/{id}/medias/{type}", inputVideoId.getValue(), inputInvalidType)
                 .file(inputMedia)
+                .with(ApiTest.VIDEOS_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.MULTIPART_FORM_DATA);
         final var response = this.mockMvc.perform(aRequest).andDo(print());

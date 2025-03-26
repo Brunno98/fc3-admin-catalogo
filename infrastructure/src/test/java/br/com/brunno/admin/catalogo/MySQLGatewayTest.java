@@ -20,8 +20,9 @@ import java.lang.annotation.Target;
 @DataJpaTest
 @ComponentScan(
         basePackages = "br.com.brunno.admin.catalogo",
+        useDefaultFilters = false,
         includeFilters = {
-                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".[MySQLGatewayTesy]")
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*MySQLGateway")
         }
 )
 @ExtendWith(CleanupMySQLExtension.class)

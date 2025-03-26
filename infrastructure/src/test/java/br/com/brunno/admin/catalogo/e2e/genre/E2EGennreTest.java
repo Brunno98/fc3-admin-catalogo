@@ -1,5 +1,6 @@
 package br.com.brunno.admin.catalogo.e2e.genre;
 
+import br.com.brunno.admin.catalogo.ApiTest;
 import br.com.brunno.admin.catalogo.E2ETest;
 import br.com.brunno.admin.catalogo.e2e.MockDSL;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,6 +97,7 @@ public class E2EGennreTest implements MockDSL {
         this.deleteGenre(genreId);
 
         mockMvc.perform(get("/genre/{id}", genreId.getValue())
+                        .with(ApiTest.ADMIN_JWT)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
